@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RestoranMobile.Views.ProizvodiDetaljiPage"
+  xmlns:local="clr-namespace:RestoranMobile.Helper"
+    Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:ByteToImageFieldConverter x:Key="imgConv"></local:ByteToImageFieldConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+
+            </Grid.ColumnDefinitions>
+            <Image Grid.Row="0" Grid.ColumnSpan="2" Source="{Binding Artikal.Slika,Converter={StaticResource imgConv}}"></Image>
+            <Label Grid.Row="1" Grid.Column="0" Text="Naziv"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Label Grid.Row="1" Grid.Column="1" Text="{Binding  Artikal.Naziv}"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Label Grid.Row="2" Grid.Column="0" Text="Cijena"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Label Grid.Row="2" Grid.Column="1" Text="{Binding  Artikal.Cijena}"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Label Grid.Row="3" Grid.Column="0" Text="Cijena sa PDVom"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Label Grid.Row="3" Grid.Column="1" Text="{Binding  Artikal.CijenaSaPdv}"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Label Grid.Row="4" Grid.Column="0" Text="PDV"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Label Grid.Row="4" Grid.Column="1" Text="{Binding  Artikal.PDV}"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Label Grid.Row="5" Grid.Column="0" Text="Kategorija"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Label Grid.Row="5" Grid.Column="1" Text="{Binding  Artikal.Kategorija.Naziv}"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Label Grid.Row="6" Grid.Column="0" Text="Sastav"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Label Grid.Row="6" Grid.Column="1" Text="{Binding  Artikal.Sastav}"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Label Grid.Row="7" Grid.Column="0" Text="Kolicina"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Label Grid.Row="7" Grid.Column="1" Text="{Binding  Artikal.Kolicina}"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

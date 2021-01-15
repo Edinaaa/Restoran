@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RestoranMobile.Views.PostavkeKorisnickogRacunaPage"
+             Title="{Binding Title}"
+             >
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid  >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"  />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="70" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" 
+                       Text="Ime"
+                        HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   LineBreakMode="NoWrap"
+                   FontSize="16"></Label>
+                <Entry Grid.Row="0" Grid.Column="1"  Text="{Binding Korisnik.Ime}"></Entry>
+
+
+                <Label Grid.Row="1" Grid.Column="0"
+                  
+                   Text="Prezime"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   LineBreakMode="NoWrap"
+                   FontSize="16"  />
+
+                <Entry Grid.Row="1" Grid.Column="1"
+                   Text="{Binding Korisnik.Prezime}"
+                   VerticalOptions="Center"
+                   FontSize="16"  />
+                <Label  Grid.Row="2" Grid.Column="0" 
+                    Text="Korisnicko ime"
+                    HorizontalOptions="Center"
+                     VerticalOptions="Center"
+                    LineBreakMode="NoWrap"
+                    FontSize="16"  />
+                <Entry  Grid.Row="2" Grid.Column="1" 
+                    Text="{Binding Korisnik.KorisnickoIme}"
+                    VerticalOptions="Center"
+                    FontSize="16"  />
+                <Label  Grid.Row="3" Grid.Column="0" 
+                    Text="Datum rodjenja"
+                    HorizontalOptions="Center"
+                     VerticalOptions="Center"
+                    LineBreakMode="NoWrap"
+                    FontSize="16"  />
+                <DatePicker Grid.Row="3" Grid.Column="1"
+                   x:Name="DatumRodenja"
+                   Date="{Binding Korisnik.DatumRodenja}"
+                   DateSelected="DatumRodenja_DateSelected"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   FontSize="16"  />
+                <Label  Grid.Row="4" Grid.Column="0" 
+                    Text="Spol"
+                    HorizontalOptions="Center"
+                     VerticalOptions="Center"
+                    LineBreakMode="NoWrap"
+                    FontSize="16"  />
+                <StackLayout Grid.Row="4" Grid.Column="1"  Orientation="Vertical">
+                    <!--
+                    Za radioButton se treba dodti experimantal flag u klase maimactity i appDelegate prije poziva Forms.Init
+                    https://docs.microsoft.com/en-us/xamarin/xamarin-forms/internals/experimental-flags-->
+                    <StackLayout Orientation="Horizontal">
+                        <RadioButton Text="Zensko" IsChecked="{Binding Zensko}" /><!--Radio buttun ne prikazuje text-->
+                        <Label Text="Zensko"  VerticalOptions="Center"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                       <RadioButton Text="Musko" IsChecked="{Binding Musko}"/>
+                        <!--Radio buttun ne prikazuje text-->
+                        <Label Text="Musko" VerticalOptions="Center"></Label>
+                    </StackLayout>
+                   
+                </StackLayout>
+
+
+                <Label  Grid.Row="5" Grid.Column="0" 
+                    Text="Lozinka"
+                    HorizontalOptions="Center"
+                     VerticalOptions="Center"
+                    LineBreakMode="NoWrap"
+                    FontSize="16"  />
+                <Entry  Grid.Row="5" Grid.Column="1" 
+                        IsPassword="True"
+                    Text="{Binding Lozinka}"
+                    VerticalOptions="Center"
+                    FontSize="16"  />
+                <Label  Grid.Row="6" Grid.Column="0" 
+                    Text="Lozinka potvrda"
+                    HorizontalOptions="Center"
+                     VerticalOptions="Center"
+                    LineBreakMode="NoWrap"
+                    FontSize="16"  />
+                <Entry  Grid.Row="6" Grid.Column="1" 
+                        IsPassword="True"
+                        
+                    Text="{Binding LozinkaPotvrda}"
+                    VerticalOptions="Center"
+                    FontSize="16"  />
+            </Grid>
+
+            <Button Text="Snimi izmjene" Clicked="Button_Clicked" Margin="10"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

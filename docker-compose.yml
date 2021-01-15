@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  db:
+    image: "restoran"
+    ports:
+      - "1433:1433"
+  restoran:
+    image: ${DOCKER_REGISTRY-}restoran
+    build:
+      context: .
+      dockerfile: Restoran/Dockerfile
+    depends_on:
+             - db
+    

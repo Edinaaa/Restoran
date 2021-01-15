@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RestoranMobile.Views.NarudzbePage"
+                 Title="{Binding Title}"
+              xmlns:model="clr-namespace:Restoran.Model;assembly=Restoran.Model" 
+                  xmlns:viewmodels="clr-namespace:RestoranMobile.ViewModels" 
+             >
+    <ContentPage.Content>
+        <StackLayout>
+            <CollectionView ItemsSource="{Binding Narudzbe}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                       Span="1" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid x:DataType="model:Narudzba" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35"  />
+                                <RowDefinition Height="35"  />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="Auto"/>
+
+                            </Grid.ColumnDefinitions>
+
+
+                            <Label Grid.Row="0" Grid.Column="0"  Text="{Binding DatumNarudzbe, StringFormat='Datum {0:dd.MM.yyyy.}'}"
+                                       HorizontalOptions="Center"
+                                       LineBreakMode="NoWrap"
+                                       FontSize="16"  />
+                                <Label   Grid.Row="0" Grid.Column="1" Text="{Binding Cijena, StringFormat= 'Iznos: {0} KM'}"
+                                       HorizontalOptions="Center"
+                                       LineBreakMode="NoWrap"
+                                       FontSize="16"  />
+
+                                <Label Grid.Row="1" Grid.ColumnSpan="2"  Text="Placeno"
+                                       HorizontalOptions="Center"
+                                       LineBreakMode="NoWrap"
+                                   IsVisible="{Binding Naplaceno}"
+                                       FontSize="16"  />
+
+
+                            <Grid.GestureRecognizers>
+
+                                <TapGestureRecognizer
+                                      NumberOfTapsRequired="1"
+                                Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodels:NarudzbeViewModel}}, Path=NarudzbaTapped}"		
+                                CommandParameter="{Binding .}">
+                                    
+                                </TapGestureRecognizer>
+                            </Grid.GestureRecognizers>
+
+
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

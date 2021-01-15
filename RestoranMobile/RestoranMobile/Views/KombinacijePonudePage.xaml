@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RestoranMobile.Views.KombinacijePonudePage"                 
+             xmlns:model="clr-namespace:RestoranMobile.Models" 
+                  xmlns:viewmodels="clr-namespace:RestoranMobile.ViewModels"
+             xmlns:local="clr-namespace:RestoranMobile.Helper"
+             Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:ByteToImageFieldConverter x:Key="imgConv"></local:ByteToImageFieldConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Naruči"  Command="{Binding NaruciCommand}"  />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+      
+        <StackLayout>
+            <RefreshView x:DataType="viewmodels:KombinacijePonudeViewModel"  Command="{Binding InitCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                <CollectionView ItemsSource="{Binding Kombinacije}"
+                             SelectionMode="Multiple"  >
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical"
+                        Span="2" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid >
+                                <Frame BorderColor="Black"
+                                   Padding="5"
+                                   BackgroundColor="Aquamarine"
+                                   CornerRadius="5"
+                                   HasShadow="True">
+
+                                    <StackLayout  x:DataType="model:Item" WidthRequest="170"  HorizontalOptions="Center" >
+                                        <Image x:Name="slika" HeightRequest="100" WidthRequest="100"  Source="{Binding Slika, Converter={StaticResource imgConv}}"></Image>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding Naziv}"
+                                       HorizontalOptions="Center"
+                                       LineBreakMode="NoWrap"
+                                       FontSize="16"  />
+                                            <Button
+                                     WidthRequest="30"
+                                     HeightRequest="30"
+                                     HorizontalOptions="End" 
+                                     VerticalOptions="Center" 
+                                     ImageSource="detalji24.png" 
+                                       Command="{Binding   Source={RelativeSource AncestorType={x:Type viewmodels:KombinacijePonudeViewModel}}, Path=KombinacijaDetalji}" 
+                                      CommandParameter="{Binding .}"></Button>
+
+                                        </StackLayout>
+
+                                        <Label Text="{Binding Cijena,  StringFormat= 'Cijena: {0} KM'}"
+                                       HorizontalOptions="Center"
+                                       
+                                       LineBreakMode="NoWrap"
+                                       FontSize="16"  />
+                                        <Label Text="{Binding 
+                                        Source={x:Reference steper},
+                                        Path=Value,
+                                        StringFormat='Kolicina: {0:F2}'}" 
+                                        HorizontalOptions="Center"
+                                        FontSize="16"
+                                        IsVisible="{Binding Selected}"/>
+                                        <Stepper x:Name="steper" Value="{Binding Kolicina}"  IsVisible="{Binding Selected}"></Stepper>
+                                        <StackLayout.GestureRecognizers>
+
+                                            <TapGestureRecognizer 
+                                               
+                                NumberOfTapsRequired="1"
+                                Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodels:KombinacijePonudeViewModel}}, Path=KombinacijeTapped}"		
+                                CommandParameter="{Binding .}">
+                                            </TapGestureRecognizer>
+                                        </StackLayout.GestureRecognizers>
+                                    </StackLayout>
+
+                                </Frame>
+
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

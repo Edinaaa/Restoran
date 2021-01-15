@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RestoranMobile.ViewModels"
+             xmlns:local="clr-namespace:RestoranMobile.Helper"
+             
+             Title="{Binding Title}"
+             x:Class="RestoranMobile.Views.IzvrsenaNarudzbaPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:ByteToImageFieldConverter x:Key="imgConv"></local:ByteToImageFieldConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <vm:IzvrsenaNarudzbaViewModel></vm:IzvrsenaNarudzbaViewModel>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <AbsoluteLayout >
+            <CollectionView ItemsSource="{Binding Stavke}" 
+                            AbsoluteLayout.LayoutBounds="0,0,1,0.5"
+                            AbsoluteLayout.LayoutFlags="All">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                       Span="1" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid  >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35"  />
+                                <RowDefinition Height="35" />
+                                <RowDefinition Height="35" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"  x:Name="slika"   IsVisible="{Binding IsStavkaMenija}" Source="{Binding StavkeMenia.Artikal.Slika, Converter={StaticResource imgConv}}"></Image>
+
+                            <Label Grid.Row="0" Grid.Column="1"  Text="{Binding StavkeMenia.Artikal.Naziv}"
+                                       HorizontalOptions="EndAndExpand"
+                                       LineBreakMode="NoWrap"
+                                       FontSize="16" 
+                                   IsVisible="{Binding IsStavkaMenija}"/>
+                            <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"    IsVisible="{Binding IsKombinacija}" Source="{Binding Kombinacija.Slika, Converter={StaticResource imgConv}}"></Image>
+
+                            <Label Grid.Row="0" Grid.Column="1"  Text="{Binding Kombinacija.Naziv}"
+                                       HorizontalOptions="EndAndExpand"
+                                       LineBreakMode="NoWrap"
+                                       FontSize="16" 
+                                   IsVisible="{Binding IsKombinacija}"/>
+                            <Label   Grid.Row="0" Grid.Column="2" Text="{Binding CijenaSaPdv, StringFormat= ' {0} KM'}"
+                                       HorizontalOptions="End"
+                                       LineBreakMode="NoWrap"
+                                       FontSize="16" 
+                                     />
+
+                            <Label Grid.Row="1" Grid.Column="2" 
+                                   Text="{Binding Kolicina, StringFormat='Kolicina: {0:N0}'}" 
+                                        HorizontalOptions="EndAndExpand"
+                                        FontSize="16"
+                                        />
+
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+      
+            <StackLayout Padding="15" Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0.52,1,0.1" AbsoluteLayout.LayoutFlags="All">
+                
+                <Label Text="Ukupno: " FontAttributes="Bold" FontSize="20" HorizontalOptions="Start"></Label>
+                <Label Text="{Binding Ukupno, StringFormat= '{0} KM'}"  FontSize="20" HorizontalOptions="EndAndExpand"></Label>
+
+            </StackLayout>
+            <Label Text="{Binding StanjeNarudzbe}" 
+                   Padding="5"
+                    FontAttributes="Bold" FontSize="15"
+                   AbsoluteLayout.LayoutBounds="0,0.6,200,40"
+                   AbsoluteLayout.LayoutFlags="PositionProportional"
+                  ></Label>
+
+            <Button Text="Plati"  AbsoluteLayout.LayoutBounds="0.95,0.6,100,40" AbsoluteLayout.LayoutFlags="PositionProportional" Clicked="Button_Plati_Clicked"></Button>
+            <Button Text="..."   AbsoluteLayout.LayoutBounds="0.5,0.98,100,40" AbsoluteLayout.LayoutFlags="PositionProportional" Clicked="Button_Clicked"></Button>
+
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RestoranMobile.Views.ZahtjeviPage"
+                   Title="{Binding Title}"
+              xmlns:model="clr-namespace:Restoran.Model;assembly=Restoran.Model" 
+                  xmlns:viewmodels="clr-namespace:RestoranMobile.ViewModels" >
+    <ContentPage.Content>
+        <StackLayout>
+            <RefreshView  x:DataType="viewmodels:ZahtjeviViewModel"  Command="{Binding ZahtjeviCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}" >
+                <CollectionView ItemsSource="{Binding Zahtjevi}"   SelectionMode="Single">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="10"  x:DataType="model:Zahtjev">
+                                <Label Text="{Binding Naziv}" 
+                            LineBreakMode="NoWrap" 
+                            Style="{DynamicResource ListItemTextStyle}" 
+                            FontSize="16" />
+                          
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ZahtjeviViewModel}}, Path=ZahtjevTapped}"		
+                                CommandParameter="{Binding .}">
+                                    </TapGestureRecognizer>
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </RefreshView>
+         
+
+            <Label Text="Naziv zahtjeva: " HorizontalOptions="Center"></Label>
+            <Entry Text="{Binding NazivZahtejeva}" Margin="10"></Entry>
+            <Button Text="Dodaj novi zahtjev" Clicked="Button_Clicked" Margin="10"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

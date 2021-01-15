@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:RestoranMobile.Helper"
+          
+             
+             x:Class="RestoranMobile.Views.PriozvodiPage"
+                  xmlns:model="clr-namespace:RestoranMobile.Models" 
+                  xmlns:viewmodels="clr-namespace:RestoranMobile.ViewModels" 
+             Padding="10,0"
+             Title="{Binding Title}">
+   
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:ByteToImageFieldConverter x:Key="imgConv"></local:ByteToImageFieldConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Naruči"  Command="{Binding NaruciCommand}"  />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+       
+        <StackLayout Orientation="Vertical">
+            <Label Text="Preporučeno" FontAttributes="Bold" WidthRequest="400" Padding="5" BackgroundColor="Gray" HorizontalOptions="StartAndExpand"></Label>
+            <RefreshView x:DataType="viewmodels:ProizvodiViewModel"  Command="{Binding InitCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+
+                <CollectionView ItemsSource="{Binding PreporukaList}"  HeightRequest="800"
+                                SelectionMode="Multiple" 
+                                SelectedItem="{Binding SelectedArtikal, Mode=TwoWay}"
+                                >
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" />
+             
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate   >
+                        <Grid >
+
+                                <Frame BorderColor="Black"
+                                   Padding="5"
+                                   BackgroundColor="Aquamarine"
+                                   CornerRadius="5"
+                                   HasShadow="True">
+                                    <StackLayout  x:DataType="model:Item" WidthRequest="170" >
+                                        <Image x:Name="slika" HeightRequest="100" WidthRequest="100" 
+                                           Source="{Binding Slika, Converter={StaticResource imgConv}}">
+                                        </Image>
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                            <Label Text="{Binding Naziv}"
+                                       HorizontalOptions="Center"
+                                       LineBreakMode="NoWrap"
+                                       FontSize="16"  />
+                                            <Button
+                                     WidthRequest="30"
+                                     HeightRequest="30"
+                                     HorizontalOptions="End" 
+                                     VerticalOptions="Center" 
+                                     BackgroundColor="Aquamarine"
+                                     ImageSource="detalji24.png" 
+                                       Command="{Binding   Source={RelativeSource AncestorType={x:Type viewmodels:ProizvodiViewModel}}, Path=ArtikalDetalji}" 
+                                      CommandParameter="{Binding .}"></Button>
+
+                                        </StackLayout>
+                                        <Label Text="{Binding CijenaSaPdv, StringFormat= 'Cijena: {0} KM'}"
+                                       HorizontalOptions="Center"
+                                       LineBreakMode="NoWrap"
+                                       FontSize="16"  />
+                                      
+                                        <Label Text="{Binding 
+                                        Source={x:Reference steper},
+                                        Path=Value,
+                                        StringFormat='Kolicina: {0:F2}'}" 
+                                        HorizontalOptions="Center"
+                                        FontSize="16"
+                                        IsVisible="{Binding Selected}"/>
+                                        <Stepper x:Name="steper" Value="{Binding Kolicina}" IsVisible="{Binding Selected}"></Stepper>
+
+
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer 
+                                               
+                                NumberOfTapsRequired="1"
+                                Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodels:ProizvodiViewModel}}, Path=ArtikalTapped}"		
+                                CommandParameter="{Binding .}">
+                                            </TapGestureRecognizer>
+                                        </StackLayout.GestureRecognizers>
+                                    </StackLayout>
+
+                                </Frame>
+                            </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+         </RefreshView>
+
+
+            <Picker x:Name="KategorijePicker" 
+                    SelectedIndexChanged="KategorijePicker_SelectedIndexChanged" 
+                    HorizontalTextAlignment="Center"
+                    Title="Odaberite kategoriju"></Picker>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45"/>
+
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="90*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="baseline_search_black_18dp.png" Grid.Row="0" Grid.Column="0"/>
+                <Entry x:Name="Naziv" Text="{Binding NazivProizvoda}" Placeholder="Pretraga" HorizontalTextAlignment="Center"  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalOptions="Center"/>
+
+            </Grid>
+       
+          <RefreshView x:DataType="viewmodels:ProizvodiViewModel"  Command="{Binding InitCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                <CollectionView ItemsSource="{Binding ProizvodiList}"
+                             SelectionMode="Multiple"  >
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                        Span="2" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid >
+                            <Frame BorderColor="Black"
+                                   Padding="5"
+                                   BackgroundColor="Aquamarine"
+                                   CornerRadius="5"
+                                   HasShadow="True">
+
+                                    <StackLayout  x:DataType="model:Item" WidthRequest="170"  HorizontalOptions="Center" >
+                                    <Image x:Name="slika" HeightRequest="100" WidthRequest="100"  Source="{Binding Slika, Converter={StaticResource imgConv}}"></Image>
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                            <Label Text="{Binding Naziv}"
+                                       HorizontalOptions="Center"
+                                       LineBreakMode="NoWrap"
+                                       FontSize="16"  />
+                                            <Button
+                                     WidthRequest="30"
+                                     HeightRequest="30"
+                                     HorizontalOptions="End" 
+                                     VerticalOptions="Center" 
+                                     BackgroundColor="Aquamarine"
+                                     ImageSource="detalji24.png" 
+                                       Command="{Binding   Source={RelativeSource AncestorType={x:Type viewmodels:ProizvodiViewModel}}, Path=ArtikalDetalji}" 
+                                      CommandParameter="{Binding .}"></Button>
+
+                                        </StackLayout>
+
+                                        <Label Text="{Binding CijenaSaPdv,  StringFormat= 'Cijena: {0} KM'}"
+                                       HorizontalOptions="Center"
+                                       
+                                       LineBreakMode="NoWrap"
+                                       FontSize="16"  />
+                                    <Label Text="{Binding 
+                                        Source={x:Reference steper},
+                                        Path=Value,
+                                        StringFormat='Kolicina: {0:F2}'}" 
+                                        HorizontalOptions="Center"
+                                        FontSize="16"
+                                        IsVisible="{Binding Selected}"/>
+                                    <Stepper x:Name="steper" Value="{Binding Kolicina}"  IsVisible="{Binding Selected}"></Stepper>
+                                    <StackLayout.GestureRecognizers>
+
+                                        <TapGestureRecognizer 
+                                               
+                                NumberOfTapsRequired="1"
+                                Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodels:ProizvodiViewModel}}, Path=ArtikalTapped}"		
+                                CommandParameter="{Binding .}">
+                                        </TapGestureRecognizer>
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+
+                            </Frame>
+
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            </RefreshView>
+
+        
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
