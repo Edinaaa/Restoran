@@ -27,17 +27,13 @@ namespace RestoranWinUI.Korisnici
             return _id;
         }
 
-        private void frmPretragaKorisnika_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private async void btnPretrazi_ClickAsync(object sender, EventArgs e)
         {
             KorisniciSeachRequest request = new KorisniciSeachRequest() {
                 Ime = txtPretraga.Text,
                 Prezime=txtPretraga.Text,
-                KorisnickoIme= txtPretraga.Text
+                KorisnickoIme= txtPretraga.Text,
+                NajCasci=cbNajcesci.Checked
 
             };
           var lista=  await service.Get<List< Restoran.Model.Korisnik>>(request);

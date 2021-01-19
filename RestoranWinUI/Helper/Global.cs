@@ -145,8 +145,10 @@ namespace RestoranWinUI.Helper
         {
 
 
-            if ( date1.Value.Date>date2.Date)
-            {
+            if (date1.Value.Date.Year < date2.Date.Year
+                || (date1.Value.Date.Year == date2.Date.Year && date1.Value.Date.Month < date2.Date.Month)
+                || (date1.Value.Date.Year == date2.Date.Year && date1.Value.Date.Month == date2.Date.Month && date1.Value.Date.Day < date2.Date.Day))
+            { 
                 e.Cancel = true;
                 errorProvider.SetError(date1, poruka);
             }
@@ -157,7 +159,9 @@ namespace RestoranWinUI.Helper
         {
 
 
-            if (date1.Value.Date<DateTime.Now.Date )
+            if (date1.Value.Date.Year<DateTime.Now.Date.Year
+                ||  (date1.Value.Date.Year == DateTime.Now.Date.Year && date1.Value.Date.Month < DateTime.Now.Date.Month) 
+                || (date1.Value.Date.Year == DateTime.Now.Date.Year && date1.Value.Date.Month == DateTime.Now.Date.Month && date1.Value.Date.Day <DateTime.Now.Date.Day))
             {
                 e.Cancel = true;
                 errorProvider.SetError(date1, poruka);

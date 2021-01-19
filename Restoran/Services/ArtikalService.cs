@@ -14,10 +14,49 @@ namespace Restoran.Services
         public ArtikalService(eRestoranContext context, IMapper mapper) : base(context, mapper)
         {
         }
+        private List<Artikal> GetNajprodavanije() {
+            var svi = _context.Artikli.ToList();
+            var narudzbas = _context.StavkaNarudzbes.Where(x => x.StavkeMenijaId != null).Include(x=>x.StavkeMenia.Artikal).ToList();
+            List<int> broj = new List<int>();
+            List<Artikal> artikli = new List<Artikal>();
+
+            int najveci = -1;
+            foreach (var item in svi)
+            {
+                int novi = narudzbas.Where(x => x.StavkeMenia.ArtikalId == item.ArtikalId).Count();
+                if (najveci<novi)
+                {
+                    najveci = novi;
+
+                }
+                broj.Add(novi);
+            }
+            do
+            {
+                for (int i = 0; i < svi.Count; i++)
+                {
+                    if (najveci == broj[i])
+                    {
+                        artikli.Add(svi[i]);
+                    }
+                }
+                najveci--;
+            } while (artikli.Count < 5);
+                
+         
+            
+            return artikli;
+        }
         public override List<Model.Artikal> Get(ArtikalSearchRequest search)
         {
-            var query = _context.Artikli.Include(x => x.Kategorija).AsQueryable();
             List<Database.Artikal> artikli = new List<Artikal>();
+            if (search.NajProdavaniji)
+            {
+                artikli = GetNajprodavanije();
+                return _mapper.Map<List<Model.Artikal>>(artikli);
+            }
+            var query = _context.Artikli.Include(x => x.Kategorija).AsQueryable();
+
             if (search.id_artikals != null )
             {
                 foreach (var item in search.id_artikals)
@@ -25,6 +64,7 @@ namespace Restoran.Services
                     artikli.Add(query.Where(x => x.ArtikalId == item).FirstOrDefault());
                 }
             }
+
             else if (search.KategorijaId!=0 && search.KategorijaId!=7)//ako u kategoriji nije odabrano sve=7
             {
                 query = query.Where(x => x.KategorijaId == search.KategorijaId);

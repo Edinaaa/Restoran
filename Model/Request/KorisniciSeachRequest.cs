@@ -19,6 +19,8 @@ namespace Restoran.Model.Request
         [DataType(DataType.Text), MaxLength(30)]
 
         public string Uloga { get; set; }
+        public bool NajCasci { get; set; }
+
 
 
     }

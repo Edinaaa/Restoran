@@ -54,10 +54,46 @@ namespace Restoran.Services
             return Convert.ToBase64String(inArray);
 
         }
+        private List<Model.Korisnik> GetNajcesciKupci()
+        {
+            var svi = _context.Korisniks.ToList();
+            var narudzbas = _context.Narudzbas.ToList();
+            List<int> broj = new List<int>();
+            List<Korisnik> kupci = new List<Korisnik>();
 
+            int najveci = -1;
+            foreach (var item in svi)
+            {
+                int novi = narudzbas.Where(x => x.KorisnikId == item.KorisnikId).Count();
+                if (najveci < novi)
+                {
+                    najveci = novi;
+
+                }
+                broj.Add(novi);
+            }
+            do
+            {
+                for (int i = 0; i < svi.Count; i++)
+                {
+                    if (najveci == broj[i])
+                    {
+                        kupci.Add(svi[i]);
+                    }
+                }
+                najveci--;
+            } while (kupci.Count < 5);
+
+
+
+            return _mapper.Map<List<Model.Korisnik>>(kupci) ;
+        }
         public  List<Model.Korisnik> Get(KorisniciSeachRequest search)
         {
-
+            if (search.NajCasci)
+            {
+                return GetNajcesciKupci();
+            }
             var query = _context.Korisniks.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(search?.Ime))

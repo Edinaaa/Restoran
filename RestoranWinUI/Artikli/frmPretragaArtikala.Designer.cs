@@ -42,6 +42,7 @@
             this.CijenaSaPdv = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Pdv = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Popust = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cbNajProdavaniji = new System.Windows.Forms.CheckBox();
             this.Artikli.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvArtikli)).BeginInit();
             this.SuspendLayout();
@@ -173,11 +174,22 @@
             this.Popust.Name = "Popust";
             this.Popust.ReadOnly = true;
             // 
+            // cbNajProdavaniji
+            // 
+            this.cbNajProdavaniji.AutoSize = true;
+            this.cbNajProdavaniji.Location = new System.Drawing.Point(112, 87);
+            this.cbNajProdavaniji.Name = "cbNajProdavaniji";
+            this.cbNajProdavaniji.Size = new System.Drawing.Size(108, 17);
+            this.cbNajProdavaniji.TabIndex = 7;
+            this.cbNajProdavaniji.Text = "5 Najprodavanijih";
+            this.cbNajProdavaniji.UseVisualStyleBackColor = true;
+            // 
             // frmPretragaArtikala
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(731, 450);
+            this.Controls.Add(this.cbNajProdavaniji);
             this.Controls.Add(this.Artikli);
             this.Controls.Add(this.btnPretrazi);
             this.Controls.Add(this.label2);
@@ -210,5 +222,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn CijenaSaPdv;
         private System.Windows.Forms.DataGridViewTextBoxColumn Pdv;
         private System.Windows.Forms.DataGridViewTextBoxColumn Popust;
+        private System.Windows.Forms.CheckBox cbNajProdavaniji;
     }
 }

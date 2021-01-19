@@ -31,7 +31,7 @@ namespace RestoranWinUI.Ponude
 
         private async void frmPretragaPonuda_Load(object sender, EventArgs e)
         {
-            KorisniciSeachRequest request = new KorisniciSeachRequest() { Uloga="Administrator"  };
+            KorisniciSeachRequest request = new KorisniciSeachRequest() { Uloga="Konobar"  };
             var k = await serviceKorisnik.Get<List<Restoran.Model.Korisnik>>(request);
             k.Insert(0, new Restoran.Model.Korisnik() { KorisnikId=0, KorisnickoIme="Odaberite korisnika"});
             cbxKorisnik.DataSource =k;

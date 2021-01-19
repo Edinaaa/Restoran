@@ -14,5 +14,7 @@ namespace Restoran.Model.Request
         [DataType(DataType.Text),MaxLength(30)]
 
         public string  Naziv { get; set; }
+        public bool NajProdavaniji { get; set; }
+
     }
 }

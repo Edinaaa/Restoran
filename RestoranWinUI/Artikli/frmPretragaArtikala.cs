@@ -32,9 +32,11 @@ namespace RestoranWinUI.Artikli
             {
                 searchRequest.KategorijaId = k;
             }
+            searchRequest.NajProdavaniji = cbNajProdavaniji.Checked;
             var list=  await service.Get<List<Restoran.Model.Artikal>>(searchRequest);
             dgvArtikli.AutoGenerateColumns = false;
             dgvArtikli.DataSource = list;
+
         }
 
         private async void frmPretragaArtikala_Load(object sender, EventArgs e)
