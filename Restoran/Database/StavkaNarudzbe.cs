@@ -7,8 +7,8 @@ namespace Restoran.Database
    public class StavkaNarudzbe
     {
         public int StavkaNarudzbeId { get; set; }
-        public int? StavkeMeniaId { get; set; }
-        public StavkeMenia StavkeMenia { get; set; }
+        public int? StavkeMenijaId { get; set; }
+        public StavkeMenija StavkeMenia { get; set; }
         public int NarudzbaId { get; set; }
         public Narudzba Narudzba { get; set; }
         public int? KombinacijaId { get; set; }

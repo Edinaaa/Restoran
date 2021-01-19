@@ -21,7 +21,7 @@ namespace RestoranMobile.Helper
         public static ObservableCollection<Item> ProizvodiListSvi { get; set; } = new ObservableCollection<Item>();
         public static ObservableCollection<Item> PreporukaList { get; set; } = new ObservableCollection<Item>();
 
-        public static ObservableCollection<Item> SetPoizvodiList(List<StavkeMenia> lista) {
+        public static ObservableCollection<Item> SetPoizvodiList(List<StavkeMenija> lista) {
             IsPonuda = false;
             foreach (var proizvod in lista)
             {
@@ -29,7 +29,7 @@ namespace RestoranMobile.Helper
                 double pdv = (proizvod.PDV * proizvod.Cijena) /100 ;
                 ProizvodiListSvi.Add(new Item
                 {
-                    StavkeMeniaId = proizvod.StavkeMeniaId,
+                    StavkeMenijaId = proizvod.StavkeMenijaId,
                     KombinacijaId=null,
                     Cijena = proizvod.Cijena-popust,
                     
@@ -54,7 +54,7 @@ namespace RestoranMobile.Helper
                 ProizvodiListSvi.Add(new Item
                 {
                     KombinacijaId = proizvod.KombinacijaId,
-                    StavkeMeniaId=null,
+                    StavkeMenijaId=null,
                     Cijena = proizvod.Cijena,
                     CijenaSaPdv = proizvod.CijenaSaPdv,
                     PDV = proizvod.PDV,
@@ -78,7 +78,7 @@ namespace RestoranMobile.Helper
                 double pdv = (proizvod.PDV * proizvod.Cijena) / 100;
                 PreporukaList.Add(new Item
                 {
-                    StavkeMeniaId = proizvod.StavkeMeniaId,
+                    StavkeMenijaId = proizvod.StavkeMenijaId,
                     KombinacijaId = proizvod.KombinacijaId,
                     Cijena = proizvod.Cijena - popust,
                     CijenaSaPdv = (proizvod.Cijena - popust) + pdv,
@@ -133,9 +133,9 @@ namespace RestoranMobile.Helper
             {
                 foreach (var i in lista)
                 {
-                    if ( (i.KombinacijaId != null && i.KombinacijaId == item.KombinacijaId)|| (i.StavkeMeniaId != null && i.StavkeMeniaId == item.StavkeMeniaId))
+                    if ( (i.KombinacijaId != null && i.KombinacijaId == item.KombinacijaId)|| (i.StavkeMenijaId != null && i.StavkeMenijaId == item.StavkeMenijaId))
                     {
-                        Item a = artikalMs.Where(x => x.KombinacijaId == i.KombinacijaId && x.KombinacijaId!=null|| x.StavkeMeniaId == i.StavkeMeniaId && x.StavkeMeniaId!=null).FirstOrDefault();
+                        Item a = artikalMs.Where(x => x.KombinacijaId == i.KombinacijaId && x.KombinacijaId!=null|| x.StavkeMenijaId == i.StavkeMenijaId && x.StavkeMenijaId!=null).FirstOrDefault();
                         if (i.Selected )
                         {
                             if (i.Kolicina!=0)
@@ -144,7 +144,7 @@ namespace RestoranMobile.Helper
                             }
                             if (a != null && i.Kolicina != 0)
                             {
-                                artikalMs.Where(x => x.KombinacijaId == i.KombinacijaId && x.StavkeMeniaId == i.StavkeMeniaId).First().Kolicina = i.Kolicina;
+                                artikalMs.Where(x => x.KombinacijaId == i.KombinacijaId && x.StavkeMenijaId == i.StavkeMenijaId).First().Kolicina = i.Kolicina;
 
                             }
                             else if (a == null)
@@ -171,10 +171,10 @@ namespace RestoranMobile.Helper
             {
                 foreach (var pl in PreporukaList)
                 {
-                    if ((pl.KombinacijaId != null && pl.KombinacijaId == item.KombinacijaId) || (pl.StavkeMeniaId != null && pl.StavkeMeniaId == item.StavkeMeniaId))
+                    if ((pl.KombinacijaId != null && pl.KombinacijaId == item.KombinacijaId) || (pl.StavkeMenijaId != null && pl.StavkeMenijaId == item.StavkeMenijaId))
                     {
                       
-                        Item i = artikalMs.Where(x => x.KombinacijaId != null && x.KombinacijaId == item.KombinacijaId || x.StavkeMeniaId != null && x.StavkeMeniaId == item.StavkeMeniaId).FirstOrDefault();
+                        Item i = artikalMs.Where(x => x.KombinacijaId != null && x.KombinacijaId == item.KombinacijaId || x.StavkeMenijaId != null && x.StavkeMenijaId == item.StavkeMenijaId).FirstOrDefault();
 
                         if (item.Selected)
                         {
@@ -224,8 +224,8 @@ namespace RestoranMobile.Helper
 
         public static ObservableCollection<Item> GetArtiklePoKategoriji(int kategorijaId)
         {
-            if (kategorijaId==6)
-            {// sve id=6
+            if (kategorijaId==7)
+            {// sve id=7
                 return ProizvodiListSvi;
             }
             ObservableCollection<Item> selektovani = new ObservableCollection<Item>();

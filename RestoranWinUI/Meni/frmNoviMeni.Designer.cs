@@ -36,6 +36,11 @@
             this.txtKonobar = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.dgvStavke = new System.Windows.Forms.DataGridView();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnDodajArtikal = new System.Windows.Forms.Button();
+            this.btnSnimi = new System.Windows.Forms.Button();
+            this.cbxVazevi = new System.Windows.Forms.CheckBox();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.ArtikalId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Slika = new System.Windows.Forms.DataGridViewImageColumn();
             this.Artikal = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -43,11 +48,7 @@
             this.Cijena = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CijenaSaPdv = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Kategorija = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnDodajArtikal = new System.Windows.Forms.Button();
-            this.btnSnimi = new System.Windows.Forms.Button();
-            this.cbxVazevi = new System.Windows.Forms.CheckBox();
-            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.Aktivan = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStavke)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -115,75 +116,26 @@
             this.Popust,
             this.Cijena,
             this.CijenaSaPdv,
-            this.Kategorija});
+            this.Kategorija,
+            this.Aktivan});
             this.dgvStavke.Location = new System.Drawing.Point(6, 19);
             this.dgvStavke.Name = "dgvStavke";
             this.dgvStavke.ReadOnly = true;
             this.dgvStavke.RowTemplate.Height = 60;
-            this.dgvStavke.Size = new System.Drawing.Size(647, 268);
+            this.dgvStavke.Size = new System.Drawing.Size(563, 268);
             this.dgvStavke.TabIndex = 6;
             this.dgvStavke.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStavke_CellClick);
             this.dgvStavke.Validating += new System.ComponentModel.CancelEventHandler(this.dgvStavke_Validating);
             // 
-            // ArtikalId
-            // 
-            this.ArtikalId.DataPropertyName = "ArtikalId";
-            this.ArtikalId.HeaderText = "ArtikalId";
-            this.ArtikalId.Name = "ArtikalId";
-            this.ArtikalId.ReadOnly = true;
-            this.ArtikalId.Visible = false;
-            // 
-            // Slika
-            // 
-            this.Slika.DataPropertyName = "Slika";
-            this.Slika.HeaderText = "Slika";
-            this.Slika.Name = "Slika";
-            this.Slika.ReadOnly = true;
-            // 
-            // Artikal
-            // 
-            this.Artikal.DataPropertyName = "Naziv";
-            this.Artikal.HeaderText = "Naziv artikla";
-            this.Artikal.Name = "Artikal";
-            this.Artikal.ReadOnly = true;
-            // 
-            // Popust
-            // 
-            this.Popust.DataPropertyName = "Popust";
-            this.Popust.HeaderText = "Popust";
-            this.Popust.Name = "Popust";
-            this.Popust.ReadOnly = true;
-            // 
-            // Cijena
-            // 
-            this.Cijena.DataPropertyName = "Cijena";
-            this.Cijena.HeaderText = "Cijena";
-            this.Cijena.Name = "Cijena";
-            this.Cijena.ReadOnly = true;
-            // 
-            // CijenaSaPdv
-            // 
-            this.CijenaSaPdv.DataPropertyName = "CijenaSaPdv";
-            this.CijenaSaPdv.HeaderText = "CijenaSaPdv";
-            this.CijenaSaPdv.Name = "CijenaSaPdv";
-            this.CijenaSaPdv.ReadOnly = true;
-            // 
-            // Kategorija
-            // 
-            this.Kategorija.DataPropertyName = "Kategorija";
-            this.Kategorija.HeaderText = "Kategorija";
-            this.Kategorija.Name = "Kategorija";
-            this.Kategorija.ReadOnly = true;
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dgvStavke);
-            this.groupBox1.Location = new System.Drawing.Point(27, 115);
+            this.groupBox1.Location = new System.Drawing.Point(45, 118);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(660, 301);
+            this.groupBox1.Size = new System.Drawing.Size(581, 301);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Stavke menia";
+            this.groupBox1.Text = "Stavke menija";
             // 
             // btnDodajArtikal
             // 
@@ -218,6 +170,67 @@
             // errorProvider
             // 
             this.errorProvider.ContainerControl = this;
+            // 
+            // ArtikalId
+            // 
+            this.ArtikalId.DataPropertyName = "ArtikalId";
+            this.ArtikalId.HeaderText = "ArtikalId";
+            this.ArtikalId.Name = "ArtikalId";
+            this.ArtikalId.ReadOnly = true;
+            this.ArtikalId.Visible = false;
+            // 
+            // Slika
+            // 
+            this.Slika.DataPropertyName = "Slika";
+            this.Slika.HeaderText = "Slika";
+            this.Slika.Name = "Slika";
+            this.Slika.ReadOnly = true;
+            // 
+            // Artikal
+            // 
+            this.Artikal.DataPropertyName = "Naziv";
+            this.Artikal.HeaderText = "Naziv artikla";
+            this.Artikal.Name = "Artikal";
+            this.Artikal.ReadOnly = true;
+            // 
+            // Popust
+            // 
+            this.Popust.DataPropertyName = "Popust";
+            this.Popust.HeaderText = "Popust";
+            this.Popust.Name = "Popust";
+            this.Popust.ReadOnly = true;
+            this.Popust.Width = 50;
+            // 
+            // Cijena
+            // 
+            this.Cijena.DataPropertyName = "Cijena";
+            this.Cijena.HeaderText = "Cijena";
+            this.Cijena.Name = "Cijena";
+            this.Cijena.ReadOnly = true;
+            this.Cijena.Width = 60;
+            // 
+            // CijenaSaPdv
+            // 
+            this.CijenaSaPdv.DataPropertyName = "CijenaSaPdv";
+            this.CijenaSaPdv.HeaderText = "CijenaSaPdv";
+            this.CijenaSaPdv.Name = "CijenaSaPdv";
+            this.CijenaSaPdv.ReadOnly = true;
+            // 
+            // Kategorija
+            // 
+            this.Kategorija.DataPropertyName = "Kategorija";
+            this.Kategorija.HeaderText = "Kategorija";
+            this.Kategorija.Name = "Kategorija";
+            this.Kategorija.ReadOnly = true;
+            this.Kategorija.Width = 60;
+            // 
+            // Aktivan
+            // 
+            this.Aktivan.DataPropertyName = "Aktivan";
+            this.Aktivan.HeaderText = "Aktivan";
+            this.Aktivan.Name = "Aktivan";
+            this.Aktivan.ReadOnly = true;
+            this.Aktivan.Width = 50;
             // 
             // frmNoviMeni
             // 
@@ -258,6 +271,7 @@
         private System.Windows.Forms.Button btnDodajArtikal;
         private System.Windows.Forms.Button btnSnimi;
         private System.Windows.Forms.CheckBox cbxVazevi;
+        private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.DataGridViewTextBoxColumn ArtikalId;
         private System.Windows.Forms.DataGridViewImageColumn Slika;
         private System.Windows.Forms.DataGridViewTextBoxColumn Artikal;
@@ -265,6 +279,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Cijena;
         private System.Windows.Forms.DataGridViewTextBoxColumn CijenaSaPdv;
         private System.Windows.Forms.DataGridViewTextBoxColumn Kategorija;
-        private System.Windows.Forms.ErrorProvider errorProvider;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Aktivan;
     }
 }

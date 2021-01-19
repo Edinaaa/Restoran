@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Restoran.Controllers
 {
+ 
     public class BaseCRUDController<TModel, TSerach, TInsert, TUpdate> : BaseController<TModel, TSerach>
     {
         private readonly ICRUDService<TModel, TSerach, TInsert, TUpdate> _service = null;
@@ -14,6 +16,7 @@ namespace Restoran.Controllers
         {
             _service = service;
         }
+        [Authorize(Roles = "Konobar")]
         [HttpPost]
         public TModel Insert(TInsert insert)
         {
@@ -21,7 +24,7 @@ namespace Restoran.Controllers
 
             return _service.Insert(insert);
         }
-
+        [Authorize(Roles = "Konobar")]
         [HttpPut("{id}")]
         public TModel Update(int id, [FromBody] TUpdate update)
         {

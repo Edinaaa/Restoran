@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Restoran.Migrations
 {
-    public partial class i : Migration
+    public partial class prva : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,7 +21,7 @@ namespace Restoran.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Kategorija",
+                name: "Kategorijas",
                 columns: table => new
                 {
                     KategorijaId = table.Column<int>(nullable: false)
@@ -30,7 +30,7 @@ namespace Restoran.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Kategorija", x => x.KategorijaId);
+                    table.PrimaryKey("PK_Kategorijas", x => x.KategorijaId);
                 });
 
             migrationBuilder.CreateTable(
@@ -47,7 +47,8 @@ namespace Restoran.Migrations
                     IznosKredita = table.Column<double>(nullable: false),
                     KorisnickoIme = table.Column<string>(nullable: true),
                     LozinkaSalt = table.Column<string>(nullable: true),
-                    LozinkaHesh = table.Column<string>(nullable: true)
+                    LozinkaHesh = table.Column<string>(nullable: true),
+                    Slika = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -88,11 +89,12 @@ namespace Restoran.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Naziv = table.Column<string>(nullable: true),
                     Cijena = table.Column<double>(nullable: false),
-                    Popust = table.Column<double>(nullable: false),
-                    PDV = table.Column<float>(nullable: false),
+                    Popust = table.Column<int>(nullable: false),
+                    PDV = table.Column<int>(nullable: false),
                     Sastav = table.Column<string>(nullable: true),
                     Slika = table.Column<byte[]>(nullable: true),
                     CijenaSaPdv = table.Column<double>(nullable: false),
+                    KategorijaId = table.Column<int>(nullable: false),
                     JedinicaMjereId = table.Column<int>(nullable: false),
                     Kolicina = table.Column<float>(nullable: false)
                 },
@@ -104,6 +106,12 @@ namespace Restoran.Migrations
                         column: x => x.JedinicaMjereId,
                         principalTable: "JedinicaMjeres",
                         principalColumn: "JedinicaMjereId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Artikli_Kategorijas_KategorijaId",
+                        column: x => x.KategorijaId,
+                        principalTable: "Kategorijas",
+                        principalColumn: "KategorijaId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -139,6 +147,9 @@ namespace Restoran.Migrations
                     KorisnikId = table.Column<int>(nullable: false),
                     PlacanjeKreditima = table.Column<bool>(nullable: false),
                     Naplaceno = table.Column<bool>(nullable: false),
+                    Odobrena = table.Column<bool>(nullable: false),
+                    Odbijena = table.Column<bool>(nullable: false),
+                    Naplati = table.Column<bool>(nullable: false),
                     Cijena = table.Column<double>(nullable: true),
                     CijenaSaPdv = table.Column<double>(nullable: true),
                     Pdv = table.Column<float>(nullable: true),
@@ -233,18 +244,20 @@ namespace Restoran.Migrations
                 name: "StavkeMenias",
                 columns: table => new
                 {
-                    StavkeMeniaId = table.Column<int>(nullable: false)
+                    StavkeMenijaId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MeniId = table.Column<int>(nullable: false),
                     ArtikalId = table.Column<int>(nullable: false),
-                    Popust = table.Column<float>(nullable: false),
+                    Popust = table.Column<int>(nullable: false),
                     Cijena = table.Column<double>(nullable: false),
+                    PDV = table.Column<int>(nullable: false),
+                    Aktivan = table.Column<bool>(nullable: false),
                     CijenaSaPDV = table.Column<double>(nullable: false),
                     KategorijaId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StavkeMenias", x => x.StavkeMeniaId);
+                    table.PrimaryKey("PK_StavkeMenias", x => x.StavkeMenijaId);
                     table.ForeignKey(
                         name: "FK_StavkeMenias_Artikli_ArtikalId",
                         column: x => x.ArtikalId,
@@ -252,11 +265,11 @@ namespace Restoran.Migrations
                         principalColumn: "ArtikalId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StavkeMenias_Kategorija_KategorijaId",
+                        name: "FK_StavkeMenias_Kategorijas_KategorijaId",
                         column: x => x.KategorijaId,
-                        principalTable: "Kategorija",
+                        principalTable: "Kategorijas",
                         principalColumn: "KategorijaId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_StavkeMenias_Menis_MeniId",
                         column: x => x.MeniId,
@@ -266,63 +279,64 @@ namespace Restoran.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StavkaNarudzbes",
-                columns: table => new
-                {
-                    StavkaNarudzbeId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ArtikaId = table.Column<int>(nullable: false),
-                    ArtikalId = table.Column<int>(nullable: true),
-                    NarudzbaId = table.Column<int>(nullable: false),
-                    Cijena = table.Column<double>(nullable: false),
-                    Pdv = table.Column<float>(nullable: false),
-                    Kolicina = table.Column<float>(nullable: false),
-                    JedinicaMjereId = table.Column<int>(nullable: false),
-                    CijenaSaPdv = table.Column<double>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StavkaNarudzbes", x => x.StavkaNarudzbeId);
-                    table.ForeignKey(
-                        name: "FK_StavkaNarudzbes_Artikli_ArtikalId",
-                        column: x => x.ArtikalId,
-                        principalTable: "Artikli",
-                        principalColumn: "ArtikalId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_StavkaNarudzbes_JedinicaMjeres_JedinicaMjereId",
-                        column: x => x.JedinicaMjereId,
-                        principalTable: "JedinicaMjeres",
-                        principalColumn: "JedinicaMjereId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_StavkaNarudzbes_Narudzbas_NarudzbaId",
-                        column: x => x.NarudzbaId,
-                        principalTable: "Narudzbas",
-                        principalColumn: "NarudzbaId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Kombinacija",
+                name: "Kombinacijas",
                 columns: table => new
                 {
                     KombinacijaId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PonudaId = table.Column<int>(nullable: false),
                     Cijena = table.Column<double>(nullable: false),
+                    PDV = table.Column<int>(nullable: false),
                     CijenaSaPdv = table.Column<double>(nullable: false),
-                    Naziv = table.Column<string>(nullable: true)
+                    Naziv = table.Column<string>(nullable: true),
+                    Slika = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Kombinacija", x => x.KombinacijaId);
+                    table.PrimaryKey("PK_Kombinacijas", x => x.KombinacijaId);
                     table.ForeignKey(
-                        name: "FK_Kombinacija_Ponudas_PonudaId",
+                        name: "FK_Kombinacijas_Ponudas_PonudaId",
                         column: x => x.PonudaId,
                         principalTable: "Ponudas",
                         principalColumn: "PonudaId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StavkaNarudzbes",
+                columns: table => new
+                {
+                    StavkaNarudzbeId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StavkeMenijaId = table.Column<int>(nullable: true),
+                    NarudzbaId = table.Column<int>(nullable: false),
+                    KombinacijaId = table.Column<int>(nullable: true),
+                    Cijena = table.Column<double>(nullable: false),
+                    Pdv = table.Column<int>(nullable: false),
+                    Kolicina = table.Column<float>(nullable: false),
+                    CijenaSaPdv = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StavkaNarudzbes", x => x.StavkaNarudzbeId);
+                    table.ForeignKey(
+                        name: "FK_StavkaNarudzbes_Kombinacijas_KombinacijaId",
+                        column: x => x.KombinacijaId,
+                        principalTable: "Kombinacijas",
+                        principalColumn: "KombinacijaId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_StavkaNarudzbes_Narudzbas_NarudzbaId",
+                        column: x => x.NarudzbaId,
+                        principalTable: "Narudzbas",
+                        principalColumn: "NarudzbaId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StavkaNarudzbes_StavkeMenias_StavkeMenijaId",
+                        column: x => x.StavkeMenijaId,
+                        principalTable: "StavkeMenias",
+                        principalColumn: "StavkeMenijaId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -333,8 +347,7 @@ namespace Restoran.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     KombinacijaId = table.Column<int>(nullable: false),
                     ArtikalId = table.Column<int>(nullable: false),
-                    Kolicina = table.Column<float>(nullable: false),
-                    JedinicaMjereId = table.Column<int>(nullable: false)
+                    Kolicina = table.Column<float>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -346,15 +359,9 @@ namespace Restoran.Migrations
                         principalColumn: "ArtikalId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StavkeKombinacijes_JedinicaMjeres_JedinicaMjereId",
-                        column: x => x.JedinicaMjereId,
-                        principalTable: "JedinicaMjeres",
-                        principalColumn: "JedinicaMjereId",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_StavkeKombinacijes_Kombinacija_KombinacijaId",
+                        name: "FK_StavkeKombinacijes_Kombinacijas_KombinacijaId",
                         column: x => x.KombinacijaId,
-                        principalTable: "Kombinacija",
+                        principalTable: "Kombinacijas",
                         principalColumn: "KombinacijaId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -365,8 +372,13 @@ namespace Restoran.Migrations
                 column: "JedinicaMjereId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Kombinacija_PonudaId",
-                table: "Kombinacija",
+                name: "IX_Artikli_KategorijaId",
+                table: "Artikli",
+                column: "KategorijaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Kombinacijas_PonudaId",
+                table: "Kombinacijas",
                 column: "PonudaId");
 
             migrationBuilder.CreateIndex(
@@ -395,14 +407,9 @@ namespace Restoran.Migrations
                 column: "KorisnikId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StavkaNarudzbes_ArtikalId",
+                name: "IX_StavkaNarudzbes_KombinacijaId",
                 table: "StavkaNarudzbes",
-                column: "ArtikalId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StavkaNarudzbes_JedinicaMjereId",
-                table: "StavkaNarudzbes",
-                column: "JedinicaMjereId");
+                column: "KombinacijaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StavkaNarudzbes_NarudzbaId",
@@ -410,14 +417,14 @@ namespace Restoran.Migrations
                 column: "NarudzbaId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_StavkaNarudzbes_StavkeMenijaId",
+                table: "StavkaNarudzbes",
+                column: "StavkeMenijaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StavkeKombinacijes_ArtikalId",
                 table: "StavkeKombinacijes",
                 column: "ArtikalId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StavkeKombinacijes_JedinicaMjereId",
-                table: "StavkeKombinacijes",
-                column: "JedinicaMjereId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StavkeKombinacijes_KombinacijaId",
@@ -462,9 +469,6 @@ namespace Restoran.Migrations
                 name: "StavkeKombinacijes");
 
             migrationBuilder.DropTable(
-                name: "StavkeMenias");
-
-            migrationBuilder.DropTable(
                 name: "StavkeZahtjevas");
 
             migrationBuilder.DropTable(
@@ -474,25 +478,28 @@ namespace Restoran.Migrations
                 name: "Narudzbas");
 
             migrationBuilder.DropTable(
-                name: "Kombinacija");
+                name: "StavkeMenias");
+
+            migrationBuilder.DropTable(
+                name: "Kombinacijas");
+
+            migrationBuilder.DropTable(
+                name: "Zahtjevs");
 
             migrationBuilder.DropTable(
                 name: "Artikli");
 
             migrationBuilder.DropTable(
-                name: "Kategorija");
-
-            migrationBuilder.DropTable(
                 name: "Menis");
-
-            migrationBuilder.DropTable(
-                name: "Zahtjevs");
 
             migrationBuilder.DropTable(
                 name: "Ponudas");
 
             migrationBuilder.DropTable(
                 name: "JedinicaMjeres");
+
+            migrationBuilder.DropTable(
+                name: "Kategorijas");
 
             migrationBuilder.DropTable(
                 name: "Korisniks");

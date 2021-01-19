@@ -11,11 +11,14 @@ using System.Threading.Tasks;
 
 namespace Restoran.Services
 {
-    public class NarudzbaService :BaseCRUDService<Model.Narudzba, NarudzbaSearchRequest,Database.Narudzba, NarudzbaUpsertRequest, NarudzbaUpsertRequest>
+    public class NarudzbaService :INarudzbaService
     {
-        public NarudzbaService(eRestoranContext context, IMapper mapper): base(context,mapper) {
+        public readonly eRestoranContext _context;
+        public readonly IMapper _mapper;
+        public NarudzbaService(eRestoranContext context, IMapper mapper) {
+            _context = context; _mapper = mapper;
         }
-        public override List<Model.Narudzba> Get(NarudzbaSearchRequest search)
+        public  List<Model.Narudzba> Get(NarudzbaSearchRequest search)
         {
             var narudzbe = _context.Narudzbas.AsQueryable();
             if (search.PretragaPoDatumu)
@@ -63,7 +66,7 @@ namespace Restoran.Services
 
             }
         }
-        public override Model.Narudzba Insert(NarudzbaUpsertRequest insert)
+        public  Model.Narudzba Insert(NarudzbaUpsertRequest insert)
         {
             Validiraj(insert);
             
@@ -86,7 +89,7 @@ namespace Restoran.Services
             foreach (var item in insert.Stavke)
             {
                 Database.StavkaNarudzbe sn = new Database.StavkaNarudzbe() {
-                   StavkeMeniaId = item.StavkeMeniaId == 0?null:item.StavkeMeniaId,
+                   StavkeMenijaId = item.StavkeMeniaId == 0?null:item.StavkeMeniaId,
                     KombinacijaId = item.KombinacijaId==0? null:item.KombinacijaId,
                     Cijena = item.Cijena,// cijena je pomnozena za kolicinom na frontend dijelu
                     CijenaSaPdv = item.CijenaSaPdv,
@@ -109,7 +112,7 @@ namespace Restoran.Services
 
             return _mapper.Map<Model.Narudzba>(narudzba);
         }
-        public override Model.Narudzba Update(int id, NarudzbaUpsertRequest update)
+        public Model.Narudzba Update(int id, NarudzbaUpsertRequest update)
         {
 
             Database.Narudzba entity = _context.Narudzbas.Where(x => x.NarudzbaId == id).FirstOrDefault();
@@ -145,6 +148,12 @@ namespace Restoran.Services
             _context.SaveChanges();
            return  _mapper.Map<Model.Narudzba>(entity);
            
+        }
+
+        public Model.Narudzba GetById(int id)
+        {
+            var narudzbe = _context.Narudzbas.Find(id);
+            return _mapper.Map<Model.Narudzba>(narudzbe);
         }
     }
 }

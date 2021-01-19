@@ -352,7 +352,7 @@
     <Compile Include="Meni\frmStavkeMenia.Designer.cs">
       <DependentUpon>frmStavkeMenia.cs</DependentUpon>
     </Compile>
-    <Compile Include="Meni\StavkeMeniaVM.cs" />
+    <Compile Include="Meni\StavkeMenijaVM.cs" />
     <Compile Include="Narudzbe\frmNarudzba.cs">
       <SubType>Form</SubType>
     </Compile>

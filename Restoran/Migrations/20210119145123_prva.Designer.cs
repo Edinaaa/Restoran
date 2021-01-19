@@ -10,14 +10,14 @@ using Restoran.Database;
 namespace Restoran.Migrations
 {
     [DbContext(typeof(eRestoranContext))]
-    [Migration("20201023162903_jm")]
-    partial class jm
+    [Migration("20210119145123_prva")]
+    partial class prva
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.8")
+                .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -37,17 +37,20 @@ namespace Restoran.Migrations
                     b.Property<int>("JedinicaMjereId")
                         .HasColumnType("int");
 
+                    b.Property<int>("KategorijaId")
+                        .HasColumnType("int");
+
                     b.Property<float>("Kolicina")
                         .HasColumnType("real");
 
                     b.Property<string>("Naziv")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("PDV")
-                        .HasColumnType("real");
+                    b.Property<int>("PDV")
+                        .HasColumnType("int");
 
-                    b.Property<double>("Popust")
-                        .HasColumnType("float");
+                    b.Property<int>("Popust")
+                        .HasColumnType("int");
 
                     b.Property<string>("Sastav")
                         .HasColumnType("nvarchar(max)");
@@ -58,6 +61,8 @@ namespace Restoran.Migrations
                     b.HasKey("ArtikalId");
 
                     b.HasIndex("JedinicaMjereId");
+
+                    b.HasIndex("KategorijaId");
 
                     b.ToTable("Artikli");
                 });
@@ -89,7 +94,7 @@ namespace Restoran.Migrations
 
                     b.HasKey("KategorijaId");
 
-                    b.ToTable("Kategorija");
+                    b.ToTable("Kategorijas");
                 });
 
             modelBuilder.Entity("Restoran.Database.Kombinacija", b =>
@@ -108,14 +113,20 @@ namespace Restoran.Migrations
                     b.Property<string>("Naziv")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PDV")
+                        .HasColumnType("int");
+
                     b.Property<int>("PonudaId")
                         .HasColumnType("int");
+
+                    b.Property<byte[]>("Slika")
+                        .HasColumnType("varbinary(max)");
 
                     b.HasKey("KombinacijaId");
 
                     b.HasIndex("PonudaId");
 
-                    b.ToTable("Kombinacija");
+                    b.ToTable("Kombinacijas");
                 });
 
             modelBuilder.Entity("Restoran.Database.Korisnik", b =>
@@ -148,6 +159,9 @@ namespace Restoran.Migrations
 
                     b.Property<string>("Prezime")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Slika")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Spol")
                         .HasColumnType("nvarchar(max)");
@@ -230,6 +244,15 @@ namespace Restoran.Migrations
                     b.Property<bool>("Naplaceno")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("Naplati")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Odbijena")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Odobrena")
+                        .HasColumnType("bit");
+
                     b.Property<float?>("Pdv")
                         .HasColumnType("real");
 
@@ -273,12 +296,6 @@ namespace Restoran.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ArtikaId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ArtikalId")
-                        .HasColumnType("int");
-
                     b.Property<double>("Cijena")
                         .HasColumnType("float");
 
@@ -288,17 +305,25 @@ namespace Restoran.Migrations
                     b.Property<float>("Kolicina")
                         .HasColumnType("real");
 
+                    b.Property<int?>("KombinacijaId")
+                        .HasColumnType("int");
+
                     b.Property<int>("NarudzbaId")
                         .HasColumnType("int");
 
-                    b.Property<float>("Pdv")
-                        .HasColumnType("real");
+                    b.Property<int>("Pdv")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StavkeMenijaId")
+                        .HasColumnType("int");
 
                     b.HasKey("StavkaNarudzbeId");
 
-                    b.HasIndex("ArtikalId");
+                    b.HasIndex("KombinacijaId");
 
                     b.HasIndex("NarudzbaId");
+
+                    b.HasIndex("StavkeMenijaId");
 
                     b.ToTable("StavkaNarudzbes");
                 });
@@ -313,9 +338,6 @@ namespace Restoran.Migrations
                     b.Property<int>("ArtikalId")
                         .HasColumnType("int");
 
-                    b.Property<int>("JedinicaMjereId")
-                        .HasColumnType("int");
-
                     b.Property<float>("Kolicina")
                         .HasColumnType("real");
 
@@ -326,19 +348,20 @@ namespace Restoran.Migrations
 
                     b.HasIndex("ArtikalId");
 
-                    b.HasIndex("JedinicaMjereId");
-
                     b.HasIndex("KombinacijaId");
 
                     b.ToTable("StavkeKombinacijes");
                 });
 
-            modelBuilder.Entity("Restoran.Database.StavkeMenia", b =>
+            modelBuilder.Entity("Restoran.Database.StavkeMenija", b =>
                 {
-                    b.Property<int>("StavkeMeniaId")
+                    b.Property<int>("StavkeMenijaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Aktivan")
+                        .HasColumnType("bit");
 
                     b.Property<int>("ArtikalId")
                         .HasColumnType("int");
@@ -355,10 +378,13 @@ namespace Restoran.Migrations
                     b.Property<int>("MeniId")
                         .HasColumnType("int");
 
-                    b.Property<float>("Popust")
-                        .HasColumnType("real");
+                    b.Property<int>("PDV")
+                        .HasColumnType("int");
 
-                    b.HasKey("StavkeMeniaId");
+                    b.Property<int>("Popust")
+                        .HasColumnType("int");
+
+                    b.HasKey("StavkeMenijaId");
 
                     b.HasIndex("ArtikalId");
 
@@ -431,6 +457,12 @@ namespace Restoran.Migrations
                         .HasForeignKey("JedinicaMjereId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Restoran.Database.Kategorija", "Kategorija")
+                        .WithMany()
+                        .HasForeignKey("KategorijaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Restoran.Database.Kombinacija", b =>
@@ -486,15 +518,19 @@ namespace Restoran.Migrations
 
             modelBuilder.Entity("Restoran.Database.StavkaNarudzbe", b =>
                 {
-                    b.HasOne("Restoran.Database.Artikal", "Artikal")
+                    b.HasOne("Restoran.Database.Kombinacija", "Kombinacija")
                         .WithMany()
-                        .HasForeignKey("ArtikalId");
+                        .HasForeignKey("KombinacijaId");
 
                     b.HasOne("Restoran.Database.Narudzba", "Narudzba")
                         .WithMany()
                         .HasForeignKey("NarudzbaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Restoran.Database.StavkeMenija", "StavkeMenia")
+                        .WithMany()
+                        .HasForeignKey("StavkeMenijaId");
                 });
 
             modelBuilder.Entity("Restoran.Database.StavkeKombinacije", b =>
@@ -505,12 +541,6 @@ namespace Restoran.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Restoran.Database.JedinicaMjere", "JedinicaMjere")
-                        .WithMany()
-                        .HasForeignKey("JedinicaMjereId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Restoran.Database.Kombinacija", "Kombinacija")
                         .WithMany()
                         .HasForeignKey("KombinacijaId")
@@ -518,7 +548,7 @@ namespace Restoran.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Restoran.Database.StavkeMenia", b =>
+            modelBuilder.Entity("Restoran.Database.StavkeMenija", b =>
                 {
                     b.HasOne("Restoran.Database.Artikal", "Artikal")
                         .WithMany()

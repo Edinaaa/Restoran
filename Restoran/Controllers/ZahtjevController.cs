@@ -11,14 +11,42 @@ using Restoran.Services;
 
 namespace Restoran.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Konobar,Kupac,Gost")]
     [Route("api/[controller]")]
     [ApiController]
-    public class ZahtjevController : BaseCRUDController<Zahtjev, object, ZahtjevUpsertRequest, ZahtjevUpsertRequest>
+    public class ZahtjevController
     {
-        public ZahtjevController(ICRUDService<Zahtjev, object, ZahtjevUpsertRequest, ZahtjevUpsertRequest> service) : base(service)
+      private readonly  IZahtjevService service;
+        public ZahtjevController(IZahtjevService service) { this.service = service; }
+
+        [HttpGet]
+        public List<Model.Zahtjev> Get([FromQuery] object request)
         {
+
+            return service.Get(request);
         }
-       
+
+        [HttpGet("{id}")]
+        public Model.Zahtjev GetById(int id)
+        {
+
+            return service.GetById(id);
+        }
+      
+        [HttpPost]
+        public Model.Zahtjev Insert(ZahtjevUpsertRequest reqests)
+        {
+            return service.Insert(reqests);
+
+
+        }
+        [Authorize(Roles = "Konobar")]
+        [HttpPut("{id}")]
+        public Model.Zahtjev Update(int id, [FromBody] ZahtjevUpsertRequest request)
+        {
+
+            return service.Update(id, request);
+        }
+
     }
 }

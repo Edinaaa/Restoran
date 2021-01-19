@@ -39,9 +39,9 @@ namespace RestoranWinUI.Meni
             this.txtCijena = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtNaziv = new System.Windows.Forms.TextBox();
-            this.btnIzbrisi = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.txtPdv = new System.Windows.Forms.TextBox();
+            this.cbAktivan = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbSlika)).BeginInit();
             this.SuspendLayout();
             // 
@@ -129,16 +129,6 @@ namespace RestoranWinUI.Meni
             this.txtNaziv.Size = new System.Drawing.Size(100, 20);
             this.txtNaziv.TabIndex = 24;
             // 
-            // btnIzbrisi
-            // 
-            this.btnIzbrisi.Location = new System.Drawing.Point(255, 207);
-            this.btnIzbrisi.Name = "btnIzbrisi";
-            this.btnIzbrisi.Size = new System.Drawing.Size(75, 23);
-            this.btnIzbrisi.TabIndex = 45;
-            this.btnIzbrisi.Text = "Izbrisi";
-            this.btnIzbrisi.UseVisualStyleBackColor = true;
-            this.btnIzbrisi.Click += new System.EventHandler(this.btnIzbrisi_Click);
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -155,14 +145,24 @@ namespace RestoranWinUI.Meni
             this.txtPdv.Size = new System.Drawing.Size(100, 20);
             this.txtPdv.TabIndex = 46;
             // 
+            // cbAktivan
+            // 
+            this.cbAktivan.AutoSize = true;
+            this.cbAktivan.Location = new System.Drawing.Point(146, 168);
+            this.cbAktivan.Name = "cbAktivan";
+            this.cbAktivan.Size = new System.Drawing.Size(62, 17);
+            this.cbAktivan.TabIndex = 48;
+            this.cbAktivan.Text = "Aktivan";
+            this.cbAktivan.UseVisualStyleBackColor = true;
+            // 
             // frmStavkeMenia
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(464, 267);
+            this.Controls.Add(this.cbAktivan);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtPdv);
-            this.Controls.Add(this.btnIzbrisi);
             this.Controls.Add(this.pbSlika);
             this.Controls.Add(this.btnSnimi);
             this.Controls.Add(this.label6);
@@ -193,8 +193,8 @@ namespace RestoranWinUI.Meni
         private System.Windows.Forms.TextBox txtCijena;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtNaziv;
-        private System.Windows.Forms.Button btnIzbrisi;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtPdv;
+        private System.Windows.Forms.CheckBox cbAktivan;
     }
 }

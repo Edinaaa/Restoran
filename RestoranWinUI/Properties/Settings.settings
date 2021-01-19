@@ -5,5 +5,8 @@
     <Setting Name="APIUrl" Type="System.String" Scope="User">
       <Value Profile="(Default)">http://localhost:8090/api</Value>
     </Setting>
+    <Setting Name="APIUrlLocal" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://localhost:54813/api</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -33,7 +33,7 @@ namespace Restoran.Controllers
         {
             return _service.GetById(id);
         }
-        [AllowAnonymous]
+        
         [HttpPost]
         public Model.Korisnik Insert(KorisniciUpsertReqests reqests)
         {
@@ -41,6 +41,7 @@ namespace Restoran.Controllers
 
 
         }
+        [Authorize]
         [HttpPut("{id}")]
         public Model.Korisnik Update(int id, [FromBody] KorisniciUpsertReqests request)
         {

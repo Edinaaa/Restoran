@@ -55,7 +55,7 @@ namespace Restoran.Services
                 {
                     StavkeKombinacije sk = new StavkeKombinacije() {
                         ArtikalId = item.ArtikalId,
-                        KombinacijaId = k.KombinacijaId,//id od k jer iz stavki kombinacijaId jos nije ni dobila id
+                        KombinacijaId = k.KombinacijaId,
                         Kolicina=item.Kolicina};
                     _context.StavkeKombinacijes.Add(sk);
                   

@@ -37,7 +37,7 @@ namespace RestoranMobile.ViewModels
         private async void OnAtrikalIdSet(string value)
         {
             Title = "Datalji proizvoda";
-            StavkeMenia sm=await  service.GetById<Restoran.Model.StavkeMenia>(int.Parse(value));
+            StavkeMenija sm=await  service.GetById<Restoran.Model.StavkeMenija>(int.Parse(value));
             Artikal = new Artikal() {
                 Slika = sm.Artikal.Slika,
                 Naziv= sm.Artikal.Naziv,

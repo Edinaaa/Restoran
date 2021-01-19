@@ -18,9 +18,9 @@ namespace Restoran.Services
         public PreporukaService(eRestoranContext context, IMapper mapper) { _context = context; _mapper = mapper; }
         List<Preporuka> proizvodiPosmatranog;
         int idKorisnika;
-        double najvecaSlicnost=0;
+        double najvecaSlicnost=0.3;
         List<Preporuka> preporuceni = new List<Preporuka>();
-      private List<Preporuka> GetSlicniog() {
+    /* private List<Preporuka> GetSlicniog() {
              var ostaliKorisnici = _context.Korisniks.Where(x=>x.KorisnikId!=idKorisnika).ToList();
              List<Preporuka> preporuceni = new List<Preporuka>();
              proizvodiPosmatranog = SetBrojNarudzbiKorisnika(idKorisnika);
@@ -40,7 +40,7 @@ namespace Restoran.Services
 
              return preporuceni;
          }
-
+*/ 
         private void SetPreporuke()
         {
             var ostaliKorisnici = _context.Korisniks.Where(x => x.KorisnikId != idKorisnika).ToList();
@@ -62,7 +62,7 @@ namespace Restoran.Services
 
          
         }
-        private Preporuka GetPreporuka() {
+    /*    private Preporuka GetPreporuka() {
             List<Preporuka> proizvodiDrugog = GetSlicniog();
             Preporuka najslicniji=new Preporuka();
             double vecaSlicnost = najvecaSlicnost;
@@ -80,7 +80,7 @@ namespace Restoran.Services
                 item.brojNarudzbi--;
             }
             return najslicniji;
-        }
+        }*/
         private void GetPreporukaList(List<Preporuka> proizvodiDrugog, double Slicnost)
         {
 
@@ -92,7 +92,7 @@ namespace Restoran.Services
                 slicnost = GetSlicnost(proizvodiDrugog);
                 if (slicnost > Slicnost && preporuceni
                     .Where(x=>(x.KombinacijaId!=null && x.KombinacijaId == item.KombinacijaId)
-                            ||(x.StavkeMeniaId!=null && x.StavkeMeniaId==item.StavkeMeniaId)
+                            ||(x.StavkeMenijaId!=null && x.StavkeMenijaId==item.StavkeMenijaId)
                      ).Count()==0
                    )
                 {
@@ -114,7 +114,7 @@ namespace Restoran.Services
             {
                 foreach (var x in proizvodiDrugih)
                 {
-                    if ((item.KombinacijaId==x.KombinacijaId && item.KombinacijaId!=null) || (item.StavkeMeniaId == x.StavkeMeniaId && item.StavkeMeniaId != null))
+                    if ((item.KombinacijaId==x.KombinacijaId && item.KombinacijaId!=null) || (item.StavkeMenijaId == x.StavkeMenijaId && item.StavkeMenijaId != null))
                     {
                         double b = Math.Round((item.brojNarudzbi - prosjekposmatranog) * (x.brojNarudzbi - prosjekDrugih), 9);
                         double n1 = Math.Round(Math.Pow(item.brojNarudzbi - prosjekposmatranog, 2), 9);
@@ -137,19 +137,19 @@ namespace Restoran.Services
 
         private List<Preporuka> SetBrojNarudzbiKorisnika(int idKorisnika)
         {
-            var stavkenarudzbe = _context.StavkaNarudzbes.Where(x => x.Narudzba.KorisnikId == idKorisnika).Include(x=>x.Kombinacija).Include(x=>x.StavkeMenia).ToList();
+            var stavkenarudzbe = _context.StavkaNarudzbes.Where(x => x.Narudzba.KorisnikId == idKorisnika ).Include(x=>x.Kombinacija).Include(x=>x.StavkeMenia).ToList();
             List<Preporuka> preporukak = new List<Preporuka>();
             List<Preporuka> preporukam = new List<Preporuka>();
 
-            preporukam =_mapper.Map<List<Model.Preporuka>>(_context.StavkeMenias.Include(x=>x.Artikal).ToList().OrderBy(x => x.StavkeMeniaId));
+            preporukam =_mapper.Map<List<Model.Preporuka>>(_context.StavkeMenias.Include(x=>x.Artikal).ToList().OrderBy(x => x.StavkeMenijaId));
             preporukak= _mapper.Map<List< Model.Preporuka>>(_context.Kombinacijas.ToList().OrderBy(x=>x.KombinacijaId)); ;
          
            
                 foreach (var x in stavkenarudzbe)
                 {
-                    if (x.StavkeMeniaId!=null && preporukam.Where(p => p.StavkeMeniaId == x.StavkeMeniaId).Count()>0)
+                    if (x.StavkeMenijaId!=null && preporukam.Where(p => p.StavkeMenijaId == x.StavkeMenijaId).Count()>0)
                     {
-                        preporukam.Where(p => p.StavkeMeniaId ==x.StavkeMeniaId).FirstOrDefault().brojNarudzbi += 1;
+                        preporukam.Where(p => p.StavkeMenijaId ==x.StavkeMenijaId).FirstOrDefault().brojNarudzbi += 1;
                     }
                 }
            
@@ -174,10 +174,7 @@ namespace Restoran.Services
             {
                 lista.Add(item.brojNarudzbi);
             }
-            if (lista.Count()!=0)
-            {
-                return preporukam;
-            }
+          
             return preporukam;
         
         }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Restoran.Services
 {
-    public class StavkeNarudzbeService : BaseCRUDService<Model.StavkaNarudzbe, StavkeNarudzbeSearchRequest, Database.StavkaNarudzbe, StavkeNarudzbeUpsertRequest, StavkeNarudzbeUpsertRequest>
+    public class StavkeNarudzbeService : BaseCRUDService<Model.StavkaNarudzbe, StavkeNarudzbeSearchRequest, Database.StavkaNarudzbe, object, object>
     {
         public StavkeNarudzbeService(eRestoranContext context, IMapper mapper) : base(context, mapper)
         {

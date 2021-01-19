@@ -49,6 +49,7 @@
             // 
             // txtKorisnickoIme
             // 
+            this.txtKorisnickoIme.Enabled = false;
             this.txtKorisnickoIme.Location = new System.Drawing.Point(153, 55);
             this.txtKorisnickoIme.Name = "txtKorisnickoIme";
             this.txtKorisnickoIme.Size = new System.Drawing.Size(100, 20);
@@ -56,6 +57,7 @@
             // 
             // txtIznosKredita
             // 
+            this.txtIznosKredita.Enabled = false;
             this.txtIznosKredita.Location = new System.Drawing.Point(153, 82);
             this.txtIznosKredita.Name = "txtIznosKredita";
             this.txtIznosKredita.Size = new System.Drawing.Size(100, 20);
@@ -110,7 +112,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(425, 221);
+            this.ClientSize = new System.Drawing.Size(333, 221);
             this.Controls.Add(this.btnPretrazi);
             this.Controls.Add(this.btnSnimi);
             this.Controls.Add(this.txtIznosUplate);

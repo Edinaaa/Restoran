@@ -179,13 +179,15 @@ namespace RestoranWinUI
 
             txtDatum.Text = DateTime.Now.ToString("dd.MM.yyyy.");
             txtSmjena.Text = DateTime.Now.Hour < 15 ? "Prva" : "Druga";
-            korisnik = await service.GetById<Restoran.Model.Korisnik>(Global.KorisnikId);
-            txtImePrezime.Text = korisnik.Ime + " " + korisnik.Prezime;
-            if (korisnik.Slika.Length != 0)
-            {
-                pbxSlika.Image = Global.ByteToImage(korisnik.Slika);
+          korisnik = await service.GetById<Restoran.Model.Korisnik>(Global.KorisnikId);
+                txtImePrezime.Text = korisnik.Ime + " " + korisnik.Prezime;
+                if (korisnik.Slika.Length != 0)
+                {
+                    pbxSlika.Image = Global.ByteToImage(korisnik.Slika);
 
-            }
+                }
+         
+         
         }
 
         private  void frmParent_Load(object sender, EventArgs e)
@@ -200,15 +202,19 @@ namespace RestoranWinUI
                 frmKorisnik frm = new frmKorisnik(korisnik.KorisnikId);
                 Global.Lokacija(frm);
                 frm.ShowDialog();
-                if (frm.Opcija == Global.Update)
+
+                if (frm.Opcija.Equals(Global.Update))
                 {
+                    frmLogin frml = new frmLogin();
+                    frml.Show();
                     Close();
                 }
+                
             }
 
           
         }
-
+       
         private void btnLogOut_Click(object sender, EventArgs e)
         {
             APIService.password = "";

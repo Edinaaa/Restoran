@@ -15,7 +15,7 @@ namespace Restoran.Model.Request
         public string Naziv { get; set; }
 
         public bool Vazeci { get; set; }
-        public List<StavkeMenia> Stavke { get; set; }
+        public List<StavkeMenija> Stavke { get; set; }
 
     }
 }

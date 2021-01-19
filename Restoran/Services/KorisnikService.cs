@@ -71,7 +71,7 @@ namespace Restoran.Services
             }
             if (!string.IsNullOrWhiteSpace(search?.KorisnickoIme))
             {
-                query = query.Where(x => x.KorisnickoIme.StartsWith(search.KorisnickoIme));
+                query = query.Where(x => x.KorisnickoIme.Equals(search.KorisnickoIme));
             }
             if (!string.IsNullOrWhiteSpace(search?.Uloga))
             {
@@ -89,8 +89,9 @@ namespace Restoran.Services
         }
         private void Validiraj(KorisniciUpsertReqests reqests, bool insert=false) {
 
-            if (insert && string.IsNullOrWhiteSpace(reqests.Password) ||
-                string.IsNullOrWhiteSpace(reqests.PasswordPotvrda) )
+            if (insert && (string.IsNullOrWhiteSpace(reqests.Password) ||
+                string.IsNullOrWhiteSpace(reqests.PasswordPotvrda)  ||
+                reqests.Uloge == null || reqests.Uloge.Count == 0))
             {
                 throw new UserException("Sva polja su obavezna.");
 
@@ -109,8 +110,7 @@ namespace Restoran.Services
                 string.IsNullOrWhiteSpace(reqests.KorisnickoIme) ||
                reqests.DatumZaposljavanja==null ||
                reqests.Slika==null ||
-                string.IsNullOrWhiteSpace(reqests.Spol)||
-                reqests.Uloge==null || reqests.Uloge.Count==0)
+                string.IsNullOrWhiteSpace(reqests.Spol))
             {
                 throw new UserException("Sva polja su obavezna.");
 
@@ -121,12 +121,8 @@ namespace Restoran.Services
                 throw new UserException("Ime, prezime ili korisnicko ime mogu sadrzavati po najvise 30 karaktera.");
 
             }
-            else if (reqests.Password.Length > 50 || reqests.PasswordPotvrda.Length > 50)
-            {
-                throw new UserException("Lozinka moze sadrzavati najvise 50 karaktera.");
-
-            }
-            else if (reqests.Spol.Length > 1 || !reqests.Spol.Equals("M") || !reqests.Spol.Equals("Z"))
+    
+            else if (reqests.Spol.Length > 1 || !(reqests.Spol.Equals("M") || reqests.Spol.Equals("Z")))
             {
                 throw new UserException("Spol moze sadrzavati najvise jedna karakter (M ili Z).");
 
@@ -216,7 +212,13 @@ namespace Restoran.Services
 
             var entity = _context.Korisniks.Find(id);
             reqests.IznosKredita += entity.IznosKredita;
-
+            if (!string.IsNullOrWhiteSpace(reqests.Password) &&
+                 !string.IsNullOrWhiteSpace(reqests.PasswordPotvrda))
+            {
+                
+                entity.LozinkaSalt = GenerateSalt();
+                entity.LozinkaHesh = GenerateHash(entity.LozinkaSalt, reqests.Password);
+            }
             _mapper.Map(reqests, entity);
             
     

@@ -34,5 +34,17 @@ namespace RestoranWinUI.Properties {
                 this["APIUrl"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:54813/api")]
+        public string APIUrlLocal {
+            get {
+                return ((string)(this["APIUrlLocal"]));
+            }
+            set {
+                this["APIUrlLocal"] = value;
+            }
+        }
     }
 }

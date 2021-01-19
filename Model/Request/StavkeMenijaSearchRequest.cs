@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Restoran.Model.Request
 {
-    public class StavkeMeniaSearchRequest
+    public class StavkeMenijaSearchRequest
     {
         [Range(0, int.MaxValue, ErrorMessage = "Mozete unjeti cijeli broj.")]
 

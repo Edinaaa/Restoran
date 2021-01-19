@@ -13,8 +13,8 @@ namespace RestoranWinUI.Meni
 {
     public partial class frmStavkeMenia : Form
     {
-      public StavkeMeniaVM Stavka { get; set; }
-        public frmStavkeMenia(StavkeMeniaVM stavka)
+      public StavkeMenijaVM Stavka { get; set; }
+        public frmStavkeMenia(StavkeMenijaVM stavka)
         {
             InitializeComponent();
             Stavka = stavka;
@@ -30,15 +30,11 @@ namespace RestoranWinUI.Meni
             double pdv = (Stavka.PDV* Stavka.Cijena)/100 ;
             Stavka.CijenaSaPDV = Stavka.Cijena+pdv;
             Stavka.Popust = int.Parse(txtPopust.Text);
+            Stavka.Aktivan = cbAktivan.Checked;
             Hide();
 
         }
 
-        private void btnIzbrisi_Click(object sender, EventArgs e)
-        {
-            Opcija = Global.Ponisti;
-            Hide();
-        }
 
         private void frmStavkeMenia_Load(object sender, EventArgs e)
         {
@@ -47,6 +43,7 @@ namespace RestoranWinUI.Meni
             txtPdv.Text = Stavka.PDV.ToString();
             txtCijena.Text = Stavka.Cijena.ToString();
             txtPopust.Text = Stavka.Popust.ToString();
+            cbAktivan.Checked = Stavka.Aktivan;
             pbSlika.Image = Global.ByteToImage(Stavka.Slika);
         }
 

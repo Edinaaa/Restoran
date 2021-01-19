@@ -27,7 +27,7 @@ namespace Restoran.Database {
         public virtual DbSet<Ponuda> Ponudas { get; set; }
         public virtual DbSet<StavkaNarudzbe> StavkaNarudzbes { get; set; }
         public virtual DbSet<StavkeKombinacije> StavkeKombinacijes { get; set; }
-        public virtual DbSet<StavkeMenia> StavkeMenias { get; set; }
+        public virtual DbSet<StavkeMenija> StavkeMenias { get; set; }
         public virtual DbSet<StavkeZahtjeva> StavkeZahtjevas { get; set; }
         public virtual DbSet<Zahtjev> Zahtjevs { get; set; }
     }

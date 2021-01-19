@@ -13,9 +13,9 @@ namespace Restoran.Controllers
   
     [Route("api/[controller]")]
     [ApiController]
-    public class StavkeMeniaController : BaseCRUDController<Model.StavkeMenia, StavkeMeniaSearchRequest, StavkeMeniaUpsertRequest, StavkeMeniaUpsertRequest>
+    public class StavkeMenijaController : BaseCRUDController<Model.StavkeMenija, StavkeMenijaSearchRequest, object, object>
     {
-        public StavkeMeniaController(ICRUDService<Model.StavkeMenia, StavkeMeniaSearchRequest, StavkeMeniaUpsertRequest, StavkeMeniaUpsertRequest> service) : base(service)
+        public StavkeMenijaController(ICRUDService<Model.StavkeMenija, StavkeMenijaSearchRequest,object, object> service) : base(service)
         {
         }
     }

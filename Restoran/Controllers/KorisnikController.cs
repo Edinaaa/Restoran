@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace Restoran.Controllers
 {
-   [Authorize(Roles = "Administrator,Konobar")]
+   [Authorize(Roles = "Konobar")]
     [Route("api/[controller]")]
     [ApiController]
     public class KorisnikController : ControllerBase
@@ -21,7 +21,7 @@ namespace Restoran.Controllers
 
         private readonly IKorisniciService service;
         public KorisnikController(IKorisniciService service) { this.service = service; }
-        [Authorize(Roles = "Administrator")]
+        
         [HttpGet]
         public List<Model.Korisnik> Get([FromQuery] KorisniciSeachRequest request)
         {
@@ -35,7 +35,7 @@ namespace Restoran.Controllers
 
             return service.GetById(id);
         }
-       
+       [AllowAnonymous]
         [HttpPost]
         public  Model.Korisnik Insert(KorisniciUpsertReqests reqests)
         {

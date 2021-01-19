@@ -111,7 +111,6 @@ namespace RestoranWinUI.Ponude
         var kombinacijaid=  int.Parse(dgvKombinacije.Rows[e.RowIndex].Cells[0].Value.ToString());
             frmNovaKombinacija frm = new frmNovaKombinacija((int)PonudaID,kombinacijaid);
             Global.Lokacija(frm);
-            frm.MdiParent = this.MdiParent;
             frm.ShowDialog();
             if (frm.Opcija == Global.Update)
             {

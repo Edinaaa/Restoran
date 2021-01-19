@@ -13,7 +13,8 @@ namespace RestoranMobile
         public static string password { get; set; }
         public static string username { get; set; }
 #if DEBUG
-      private  string _APIUrl = "http://192.168.100.12:54813/api";
+      private  string _APIUrl = "http://192.168.100.12:8090/api";
+        //8090 54813
 #endif
 #if RELEASE
     private    string _APIUrl = "https://stranica.com:44359/api";
@@ -34,7 +35,7 @@ namespace RestoranMobile
                     url += await search.ToQueryString();
                 }
               
-                return await url.WithBasicAuth(username, password).GetJsonAsync<T>();
+             return  await url.WithBasicAuth(username, password).GetJsonAsync<T>();
 
             }
             catch (FlurlHttpException ex)
@@ -47,7 +48,7 @@ namespace RestoranMobile
                 }
                 throw;
             }
-
+           
         }
 
 

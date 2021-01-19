@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Restoran.Database
 {
-  public  class StavkeMenia
+  public  class StavkeMenija
     {
-        public int StavkeMeniaId { get; set; }
+        public int StavkeMenijaId { get; set; }
         public int MeniId { get; set; }
         public Meni Meni { get; set; }
         public int ArtikalId { get; set; }
@@ -15,6 +15,8 @@ namespace Restoran.Database
         public int Popust { get; set; }
         public double Cijena { get; set; }
         public int PDV { get; set; }
+        public bool Aktivan { get; set; }
+
 
         public double CijenaSaPDV { get; set; }
 

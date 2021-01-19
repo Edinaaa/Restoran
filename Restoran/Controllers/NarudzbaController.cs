@@ -14,14 +14,43 @@ using SQLitePCL;
 
 namespace Restoran.Controllers
 {
- 
+    [Authorize(Roles = "Konobar,Kupac,Gost")]
     [Route("api/[controller]")]
     [ApiController]
-    public class NarudzbaController : BaseCRUDController<Model.Narudzba, NarudzbaSearchRequest, NarudzbaUpsertRequest, NarudzbaUpsertRequest>
+    public class NarudzbaController : ControllerBase
     {
-        public NarudzbaController(ICRUDService<Model.Narudzba, NarudzbaSearchRequest, NarudzbaUpsertRequest, NarudzbaUpsertRequest> service) : base(service)
+        private readonly INarudzbaService service;
+        public NarudzbaController(INarudzbaService service) 
         {
+            this.service = service;
         }
-        
+        [HttpGet]
+        public List<Model.Narudzba> Get([FromQuery] NarudzbaSearchRequest request)
+        {
+
+            return service.Get(request);
+        }
+
+        [HttpGet("{id}")]
+        public Model.Narudzba GetById(int id)
+        {
+
+            return service.GetById(id);
+        }
+      
+        [HttpPost]
+        public Model.Narudzba Insert(NarudzbaUpsertRequest reqests)
+        {
+            return service.Insert(reqests);
+
+
+        }
+        [HttpPut("{id}")]
+        public Model.Narudzba Update(int id, [FromBody] NarudzbaUpsertRequest request)
+        {
+
+            return service.Update(id, request);
+        }
+
     }
 }

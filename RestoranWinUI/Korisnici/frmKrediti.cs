@@ -21,10 +21,6 @@ namespace RestoranWinUI.Korisnici
             InitializeComponent();
         }
 
-        private  void frmKrediti_Load(object sender, EventArgs e)
-        {
-
-        }
 
 
         private async void btnSnimi_Click(object sender, EventArgs e)
@@ -46,14 +42,28 @@ namespace RestoranWinUI.Korisnici
            
             
             };
-            await service.Update<Restoran.Model.Korisnik>(korisnik.KorisnikId, r);
+          Korisnik k=  await service.Update<Restoran.Model.Korisnik>(korisnik.KorisnikId, r);
+            if (k!=null)
+            {
+                if (MessageBox.Show("Uspjesno izmjenjeno stanje kredita", "Krediti", MessageBoxButtons.OK, MessageBoxIcon.Information)==DialogResult.OK)
+                {
+                    Close();
+                } 
+             
+            }
+            else
+            {
+                MessageBox.Show("Stanje kredita nije izmjenjeno.", "Greska", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
         }
+
 
         private async void btnPretrazi_Click(object sender, EventArgs e)
         {
             frmPretragaKorisnika frm = new frmPretragaKorisnika();
             frm.ShowDialog();
-           
+
             korisnik = await service.GetById<Korisnik>(frm.SendData());
             frm.Close();
             txtIznosKredita.Text = korisnik.IznosKredita.ToString();

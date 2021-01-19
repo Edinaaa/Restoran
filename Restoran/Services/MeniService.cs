@@ -30,20 +30,26 @@ namespace Restoran.Services
         public override Model.Meni Insert(MeniUpsertRequest insert)
         {
             Validiraj(insert);
-            Meni m = new Meni() {
+            Meni m = new Meni()
+            {
                 DatumObjave = DateTime.Now,
                 KorisnikId = insert.KorisnikId,
                 Naziv = insert.Naziv,
                 Vazeci = insert.Vazeci,
-                
+
             };
+           
+
             _context.Menis.Add(m);
             _context.SaveChanges();
-
+             if (insert.Vazeci)
+                {
+                    UpdateVazeci(m.MeniId);
+                }
           foreach (var item in insert.Stavke)
             {
                
-                StavkeMenia sm = new StavkeMenia() { 
+                StavkeMenija sm = new StavkeMenija() { 
                 MeniId=m.MeniId,
                 ArtikalId=item.ArtikalId,
                 Cijena=item.Cijena,
@@ -75,26 +81,35 @@ namespace Restoran.Services
             return _mapper.Map<List<Model.Meni>>(list);
         }
        
-        private void UpdateStavke( int id, List<Model.StavkeMenia> Ustavke)
+        private void UpdateStavke( int id, List<Model.StavkeMenija> Ustavke)
         {
             var stavke = _context.StavkeMenias.Where(x => x.MeniId == id).ToList();
             bool pronadjen = false;
 
-            foreach (var item in stavke)//birse koje nedostaju u update.stavkama
+            foreach (var item in stavke)//deaktivira koje nedostaju u update.stavkama
             {
                 pronadjen = false;
                 foreach (var x in Ustavke)
                 {
                     if (x.ArtikalId == item.ArtikalId)
                     {
-                        _context.StavkeMenias.Update(item);
+
+                        item.Cijena = x.Cijena;
+                        item.Popust = x.Popust;
+                        item.PDV = x.PDV;
+                        item.CijenaSaPDV = x.CijenaSaPDV;
+                        
+                       
+                        pronadjen = true;
                     }
                 }
                 if (pronadjen == false)
                 {
-                    _context.StavkeMenias.Remove(item);
+                    item.Aktivan = false;
                 }
+                _context.StavkeMenias.Update(item);
             }
+            _context.SaveChanges();
             foreach (var item in Ustavke)//dodaje koje nedostaju u tabeli stavke 
             {
                 pronadjen = false;
@@ -102,23 +117,49 @@ namespace Restoran.Services
                 {
                     if (x.ArtikalId == item.ArtikalId)
                     {
+
                         pronadjen = true;
                     }
                 }
                 if (pronadjen == false)
                 {
-                    StavkeMenia sm = new StavkeMenia()
+                    StavkeMenija sm = new StavkeMenija()
                     {
                         MeniId = id,
                         ArtikalId = item.ArtikalId,
                         Cijena = item.Cijena,
                         CijenaSaPDV = item.CijenaSaPDV,
                         KategorijaId = item.KategorijaId,
-                        Popust = item.Popust
+                        Popust = item.Popust,
+                        Aktivan=item.Aktivan
                     };
                     _context.StavkeMenias.Add(sm);
                 }
             }
+            _context.SaveChanges();
+        }
+        private void UpdateVazeci(int id)
+        {
+           
+                var meni = _context.Menis.Where(x => x.Vazeci == true && x.MeniId == id).ToList();
+                foreach (var item in meni)
+                {
+                    item.Vazeci = false;
+                    _context.Menis.Update(item);
+                    var stavke = _context.StavkeMenias.Where(x => x.MeniId == item.MeniId).ToList();
+                    foreach (var x in stavke)
+                    {
+                        x.Aktivan = false;
+                        _context.StavkeMenias.Update(x);
+                    }
+                }
+            var stavkeAktivne = _context.StavkeMenias.Where(x => x.MeniId == id).ToList();
+            foreach (var x in stavkeAktivne)
+            {
+                x.Aktivan = true;
+                _context.StavkeMenias.Update(x);
+            }
+
             _context.SaveChanges();
         }
 
@@ -133,7 +174,12 @@ namespace Restoran.Services
             UpdateStavke(id, update.Stavke);
             entity.Naziv = update.Naziv;
             entity.Vazeci = update.Vazeci;
+            if (update.Vazeci)
+            {
+                UpdateVazeci(entity.MeniId);
+            }
             _context.Menis.Update(entity);
+      
             _context.SaveChanges();
             return _mapper.Map<Model.Meni>(entity);
         }

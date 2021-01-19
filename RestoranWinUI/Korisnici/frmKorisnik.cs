@@ -21,7 +21,7 @@ namespace RestoranWinUI.Korisnici
         public KorisniciUpsertReqests request { get; set; } = new KorisniciUpsertReqests();
         private List<int> uloge;
         private List<Restoran.Model.Uloge> ListaUloga;
-        public string Opcija { get; set; }
+        public string Opcija { get; set; } = "--";
         public frmKorisnik(int? id = null)
         {
             InitializeComponent();
@@ -41,8 +41,12 @@ namespace RestoranWinUI.Korisnici
                 txtIme.Text = korisnik.Ime;
                 txtPrezime.Text = korisnik.Prezime;
                 txtKorisnickoIme.Text = korisnik.KorisnickoIme;
-                pbxSlika.Image = Global.ByteToImage(korisnik.Slika);
-                request.Slika = korisnik.Slika;
+                if (korisnik.Slika.Length>0)
+                {
+                    pbxSlika.Image = Global.ByteToImage(korisnik.Slika);
+                    request.Slika = korisnik.Slika;
+                }
+             
                 if (korisnik.Spol == "M")
                 {
                     rbtnMusko.Checked = true;
@@ -120,7 +124,7 @@ namespace RestoranWinUI.Korisnici
 
                             if (MessageBox.Show("Uspjesno dodan korisnik.", "Dodavanje korisnika", MessageBoxButtons.OK, MessageBoxIcon.Information) == DialogResult.OK)
                             {
-                                Opcija = Global.Update;
+                               
                                 Close();
                             }
                         }
@@ -140,9 +144,12 @@ namespace RestoranWinUI.Korisnici
                     {
                         if (MessageBox.Show("Podatci o koriskniku su uspješno izmjenjeni.", "Izmjena", MessageBoxButtons.OK, MessageBoxIcon.Information) == DialogResult.OK)
                         {
-                            
-                            Close();
-                        }
+                            if (entity.KorisnikId==Global.KorisnikId)
+                            {
+                                Opcija = Global.Update;
+                            }
+                           Close();
+                        } 
                     }
                 }
 

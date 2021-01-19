@@ -11,7 +11,7 @@ namespace RestoranMobile.Models
    public class Item: BaseModel
     {
         public int? KombinacijaId { get; set; }
-        public int? StavkeMeniaId { get; set; }
+        public int? StavkeMenijaId { get; set; }
 
         public string Naziv { get; set; }
         public double Cijena { get; set; }

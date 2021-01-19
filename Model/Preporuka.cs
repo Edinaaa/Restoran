@@ -6,7 +6,7 @@ namespace Restoran.Model
 {
   public class Preporuka
     {
-        public int? StavkeMeniaId { get; set; }
+        public int? StavkeMenijaId { get; set; }
         public int? KombinacijaId { get; set; }
         public int brojNarudzbi { get; set; } = 0;
         public string Naziv { get; set; }

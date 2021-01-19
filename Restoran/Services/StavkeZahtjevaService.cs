@@ -10,12 +10,17 @@ using System.Threading.Tasks;
 
 namespace Restoran.Services
 {
-    public class StavkeZahtjevaService: BaseCRUDService<Model.StavkeZahtjeva, StavkeZahtjevaSerachRequest,Database.StavkeZahtjeva, StavkeZahtjevaUpsertRequest,StavkeZahtjevaUpsertRequest>
+    public class StavkeZahtjevaService: IStavkeZahtjevaService
     {
-        public StavkeZahtjevaService(eRestoranContext context, IMapper mapper) : base(context, mapper)
+
+        public readonly eRestoranContext _context;
+        public readonly IMapper _mapper;
+        public StavkeZahtjevaService(eRestoranContext context, IMapper mapper)
         {
+            _context = context; _mapper = mapper;
         }
-        public override List<Model.StavkeZahtjeva> Get(StavkeZahtjevaSerachRequest search)
+       
+        public  List<Model.StavkeZahtjeva> Get(StavkeZahtjevaSerachRequest search)
         {
             var list = _context.StavkeZahtjevas.Where(x => x.ZahtjevObradjen == search.Obradjeni).Include(x => x.Zahtjev).ToList();
 
@@ -31,15 +36,32 @@ namespace Restoran.Services
 
             }
         }
-        public override Model.StavkeZahtjeva Update(int id, StavkeZahtjevaUpsertRequest update)
+        public Model.StavkeZahtjeva Update(int id, StavkeZahtjevaUpsertRequest update)
         {
             Validiraj(update);
-            return base.Update(id, update);
+            var entity = _context.StavkeZahtjevas.Find(id);
+
+            _context.StavkeZahtjevas.Attach(entity);
+            _context.StavkeZahtjevas.Update(entity);
+            _mapper.Map(update, entity);
+
+            _context.SaveChanges();
+            return _mapper.Map<Model.StavkeZahtjeva>(entity);
         }
-        public override Model.StavkeZahtjeva Insert(StavkeZahtjevaUpsertRequest insert)
+        public  Model.StavkeZahtjeva Insert(StavkeZahtjevaUpsertRequest insert)
         {
             Validiraj(insert);
-            return base.Insert(insert);
+            var entity = _mapper.Map<Database.StavkeZahtjeva>(insert);
+
+            _context.StavkeZahtjevas.Add(entity);
+            _context.SaveChanges();
+            return _mapper.Map<Model.StavkeZahtjeva>(entity);
+        }
+
+        public Model.StavkeZahtjeva GetById(int id)
+        {
+            var entity = _context.StavkeZahtjevas.Find(id);
+            return _mapper.Map<Model.StavkeZahtjeva>(entity);
         }
     }
 }

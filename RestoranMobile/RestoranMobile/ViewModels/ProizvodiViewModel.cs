@@ -21,7 +21,7 @@ namespace RestoranMobile.ViewModels
     public class ProizvodiViewModel : BaseViewModel
     {
         private readonly APIService _kategorijaService = new APIService("Kategorija");
-        private readonly APIService _stavkeService = new APIService("StavkeMenia");
+        private readonly APIService _stavkeService = new APIService("StavkeMenija");
         private readonly APIService _meniService = new APIService("Meni");
         private readonly APIService _preporukaService = new APIService("Preporuka");
 
@@ -115,9 +115,9 @@ namespace RestoranMobile.ViewModels
             if (obj == null)
                 return;
 
-            if (obj.StavkeMeniaId!=null)
+            if (obj.StavkeMenijaId!=null)
             {
-                await Shell.Current.GoToAsync($"{nameof(ProizvodiDetaljiPage)}?{nameof(ProizvodDetaljiViewModel.StavkeMeniaId)}={obj.StavkeMeniaId.ToString()}");
+                await Shell.Current.GoToAsync($"{nameof(ProizvodiDetaljiPage)}?{nameof(ProizvodDetaljiViewModel.StavkeMeniaId)}={obj.StavkeMenijaId.ToString()}");
 
             }
             else if (obj.KombinacijaId != null)
@@ -136,7 +136,7 @@ namespace RestoranMobile.ViewModels
             foreach (var item in ProizvodiList)
             {
                 if ((obj.KombinacijaId != null && obj.KombinacijaId == item.KombinacijaId)||
-                    (obj.StavkeMeniaId != null && obj.StavkeMeniaId == item.StavkeMeniaId))
+                    (obj.StavkeMenijaId != null && obj.StavkeMenijaId == item.StavkeMenijaId))
                 {
 
                     item.Selected = !item.Selected;
@@ -146,7 +146,7 @@ namespace RestoranMobile.ViewModels
             foreach (var item in PreporukaList)
             {
                 if ((obj.KombinacijaId != null && obj.KombinacijaId == item.KombinacijaId) ||
-                    (obj.StavkeMeniaId != null && obj.StavkeMeniaId == item.StavkeMeniaId))
+                    (obj.StavkeMenijaId != null && obj.StavkeMenijaId == item.StavkeMenijaId))
                 {
 
                     item.Selected = !item.Selected;
@@ -172,8 +172,8 @@ namespace RestoranMobile.ViewModels
                 {
                     MeniSearchRequest request = new MeniSearchRequest() { Vazeci = true };
                     var meni = await _meniService.Get<List<Meni>>(request);
-                    StavkeMeniaSearchRequest smr = new StavkeMeniaSearchRequest() { MeniId = meni[0].MeniId };
-                    var list = await _stavkeService.Get<List<StavkeMenia>>(smr);
+                    StavkeMenijaSearchRequest smr = new StavkeMenijaSearchRequest() { MeniId = meni[0].MeniId };
+                    var list = await _stavkeService.Get<List<StavkeMenija>>(smr);
                     Singleton.ProizvodiListSvi.Clear();
                     Singleton.SetPoizvodiList(list);
 

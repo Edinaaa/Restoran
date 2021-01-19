@@ -11,6 +11,8 @@ namespace RestoranWinUI
 
         public static string password { get; set; }
         public static string username { get; set; }
+        public string APIUrl = Properties.Settings.Default.APIUrl;
+
 
         public APIService(string ruta)
         {
@@ -18,7 +20,7 @@ namespace RestoranWinUI
         }
         public async Task<T> Get<T>(object search)
         {
-            var url = $"{Properties.Settings.Default.APIUrl}/{route}";
+            var url = $"{APIUrl}/{route}";
             try
             {
                 if (search != null)
@@ -44,7 +46,7 @@ namespace RestoranWinUI
 
         public async Task<T> GetById<T>(object id)
         {
-            var url = $"{Properties.Settings.Default.APIUrl}/{route}/{id}";
+            var url = $"{APIUrl}/{route}/{id}";
 
             try
             {
@@ -64,7 +66,7 @@ namespace RestoranWinUI
 
         public async Task<T> Insert<T>(object request)
         {
-            var url = $"{Properties.Settings.Default.APIUrl}/{route}";
+            var url = $"{APIUrl}/{route}";
 
             try
             {
@@ -84,7 +86,7 @@ namespace RestoranWinUI
 
         public async Task<T> InsertKupac<T>(object request)
         {
-            var url = $"{Properties.Settings.Default.APIUrl}/{route}/InsertKupac";
+            var url = $"{APIUrl}/{route}/InsertKupac";
 
             try
             {
@@ -103,7 +105,7 @@ namespace RestoranWinUI
         }
         public async Task<T> Update<T>(object id, object request)
         {
-            var url = $"{Properties.Settings.Default.APIUrl}/{route}/{id}";
+            var url = $"{APIUrl}/{route}/{id}";
 
             try
             {

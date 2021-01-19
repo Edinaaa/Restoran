@@ -77,7 +77,7 @@ namespace RestoranMobile.ViewModels
                         {
                             KombinacijaId =  item.KombinacijaId!=null? item.KombinacijaId : 0,
 
-                            StavkeMeniaId = item.StavkeMeniaId==null ? 0 : item.StavkeMeniaId,
+                            StavkeMeniaId = item.StavkeMenijaId==null ? 0 : item.StavkeMenijaId,
                             Cijena = item.Cijena * item.Kolicina,
                             CijenaSaPdv = item.CijenaSaPdv * item.Kolicina,
                             Pdv = int.Parse(( item.PDV * item.Kolicina).ToString()),

@@ -8,7 +8,7 @@ namespace Restoran.Model
     {
         public int StavkaNarudzbeId { get; set; }
         public int? StavkeMeniaId { get; set; }
-        public StavkeMenia StavkeMenia { get; set; }
+        public StavkeMenija StavkeMenia { get; set; }
         public int? KombinacijaId { get; set; }
         public Kombinacija Kombinacija { get; set; }
         public int NarudzbaId { get; set; }

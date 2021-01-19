@@ -17,9 +17,9 @@ namespace RestoranMobile.ViewModels
     {
         private APIService serviceKupac = new APIService("Kupac");
 
-        public ICommand LoginCommand { get; }
-        string _username = "edina";
-        string _password = "1234";
+    //    public ICommand LoginCommand { get; }
+        string _username;
+        string _password;
         bool _musko ;
         bool _zensko;
         DateTime _datumRodenja;
@@ -51,7 +51,7 @@ namespace RestoranMobile.ViewModels
         }
         public LoginViewModel()
         {
-            LoginCommand = new Command(async () => await OnLoginClicked());
+           // LoginCommand = new Command(async () => await OnLoginClicked());
         }
         public async void OnClickedLogin()
         {
@@ -100,11 +100,12 @@ namespace RestoranMobile.ViewModels
             }
             catch (Exception ex)
             {
-
-                throw;
+                
+                    await Application.Current.MainPage.DisplayAlert("Greska", "Niste autentificirani.", "OK");
+              
             }
         }
-         async Task OnLoginClicked()
+  /*       async Task OnLoginClicked()
         {
             APIService.username = Username;
             APIService.password = Password;
@@ -124,5 +125,6 @@ namespace RestoranMobile.ViewModels
             // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
             // await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
         }
+   */ 
     }
 }

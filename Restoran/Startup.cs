@@ -11,6 +11,8 @@ using Restoran.Database;
 using Restoran.Model.Request;
 using Restoran.Security;
 using Restoran.Services;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace Restoran
 {
@@ -66,28 +68,28 @@ namespace Restoran
             services.AddAuthentication("BasicAuthentication")
                 .AddScheme<AuthenticationSchemeOptions, BaseAuthenticationHandler>("BasicAuthentication", null);
             services.AddDbContext<eRestoranContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("eRestoran")));
-
+           options.UseSqlServer(Configuration.GetConnectionString("eRestoran")));
+           
             services.AddScoped<ICRUDService<Model.Artikal, ArtikalSearchRequest, ArtikalUpsertRequest, ArtikalUpsertRequest>, ArtikalService>();
-            services.AddScoped<ICRUDService<Model.Narudzba, NarudzbaSearchRequest,  NarudzbaUpsertRequest, NarudzbaUpsertRequest>, NarudzbaService>();
-            services.AddScoped<ICRUDService<Model.StavkaNarudzbe, StavkeNarudzbeSearchRequest, StavkeNarudzbeUpsertRequest, StavkeNarudzbeUpsertRequest>, StavkeNarudzbeService>();
+            services.AddScoped<INarudzbaService, NarudzbaService>();
+            services.AddScoped<ICRUDService<Model.StavkaNarudzbe, StavkeNarudzbeSearchRequest, object, object>, StavkeNarudzbeService>();
             services.AddScoped<ICRUDService<Model.JedinicaMjere, object, object, object>, BaseCRUDService < Model.JedinicaMjere, object,Database.JedinicaMjere, object, object>> ();
             services.AddScoped<ICRUDService<Model.Uloge, object, object, object>, BaseCRUDService < Model.Uloge, object,Database.Uloge, object, object>> ();
             services.AddScoped<ICRUDService<Model.KorisnikUloga, KorisnikUlogeSerachRequest, object, object>, KorisnikUlogeService> ();
 
             services.AddScoped<ICRUDService<Model.Kategorija, object, object, object>, BaseCRUDService<Restoran.Model.Kategorija, object, Kategorija, object, object>>();
-            services.AddScoped<ICRUDService<Model.Zahtjev, object, ZahtjevUpsertRequest, ZahtjevUpsertRequest>, BaseCRUDService<Restoran.Model.Zahtjev, object, Zahtjev, ZahtjevUpsertRequest, ZahtjevUpsertRequest>>();
+            services.AddScoped<IZahtjevService, ZahtjevService>();
             services.AddScoped<ICRUDService<Model.Kombinacija, KombinacijaSearchRequest, KombinacijaUpsertRequest, KombinacijaUpsertRequest>,KombinacijaService>();
             services.AddScoped<ICRUDService<Model.Ponuda, PonudaSearchRequest, PonudaUpsertRequest, PonudaUpsertRequest>, PonudaService >();
             services.AddScoped<ICRUDService<Model.Meni, MeniSearchRequest, MeniUpsertRequest, MeniUpsertRequest>, MeniService>();
-            services.AddScoped<ICRUDService<Model.StavkeMenia, StavkeMeniaSearchRequest, StavkeMeniaUpsertRequest, StavkeMeniaUpsertRequest>, StavkeMeniaService>();
+            services.AddScoped<ICRUDService<Model.StavkeMenija, StavkeMenijaSearchRequest, object, object>, StavkeMenijaService>();
             services.AddScoped<ICRUDService<Model.StavkeKombinacije, StavkeKombinacijeSearchRequest, StavkeKombinacijeUpsertRequest, StavkeKombinacijeUpsertRequest>,StavkeKombinacijeService>();
             //  services.AddScoped<ICRUDService<Restoran.Model.Korisnik, KorisniciSeachRequest, KorisniciUpsertReqests, KorisniciUpsertReqests>, BaseCRUDService<Restoran.Model.Korisnik, KorisniciSeachRequest, Korisnik, KorisniciUpsertReqests, KorisniciUpsertReqests>>();
             services.AddScoped<IKorisniciService, KorisnikService>();
             services.AddScoped<IKupacService, KupacService>();
             services.AddScoped<IPreporukaService, PreporukaService>();
 
-            services.AddScoped<ICRUDService<Restoran.Model.StavkeZahtjeva, StavkeZahtjevaSerachRequest, StavkeZahtjevaUpsertRequest, StavkeZahtjevaUpsertRequest>, StavkeZahtjevaService>();
+            services.AddScoped<IStavkeZahtjevaService, StavkeZahtjevaService>();
 
         }
 

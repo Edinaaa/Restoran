@@ -33,14 +33,12 @@ namespace Restoran.Mappers
             CreateMap<Database.Zahtjev, Model.Zahtjev>();
             CreateMap<Database.Zahtjev, ZahtjevUpsertRequest>().ReverseMap();
           
-            CreateMap<Database.StavkeMenia, Model.StavkeMenia>().ReverseMap();
-            CreateMap<Database.StavkeMenia, StavkeMeniaUpsertRequest>().ReverseMap();
+            CreateMap<Database.StavkeMenija, Model.StavkeMenija>().ReverseMap();
 
             CreateMap<Database.StavkeKombinacije, Model.StavkeKombinacije>();
             CreateMap<Database.StavkeKombinacije, StavkeKombinacijeUpsertRequest>().ReverseMap();
 
             CreateMap<Database.StavkaNarudzbe, Model.StavkaNarudzbe>();
-            CreateMap<Database.StavkaNarudzbe, StavkeNarudzbeUpsertRequest>().ReverseMap();
 
 
             CreateMap<Database.StavkeZahtjeva, Model.StavkeZahtjeva>();
@@ -49,7 +47,7 @@ namespace Restoran.Mappers
 
 
 
-            CreateMap<Database.StavkeMenia, Model.Preporuka>()
+            CreateMap<Database.StavkeMenija, Model.Preporuka>()
                 .ForMember(dest => dest.Slika, opt => opt.MapFrom(src => src.Artikal.Slika))
                 .ForMember(dest => dest.Sastav, opt => opt.MapFrom(src => src.Artikal.Sastav))
                 .ForMember(dest => dest.Naziv, opt => opt.MapFrom(src => src.Artikal.Naziv)); 

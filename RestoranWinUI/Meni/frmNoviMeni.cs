@@ -18,12 +18,12 @@ namespace RestoranWinUI.Meni
     {
         private APIService service = new APIService("Korisnik");
         private APIService serviceMeni = new APIService("Meni");
-        private APIService serviceStavkeMenia = new APIService("StavkeMenia");
+        private APIService serviceStavkeMenia = new APIService("StavkeMenija");
 
         private APIService serviceArtikal = new APIService("Artikal");
         BindingSource bs = new BindingSource();
-        public List< StavkeMeniaVM> stavke { get; set; }
-        public List<StavkeMenia> stavkeMenija { get; set; }
+        public List< StavkeMenijaVM> stavke { get; set; }
+        public List<StavkeMenija> stavkeMenija { get; set; }
 
         public int? MeniID { get; set; }
         MeniUpsertRequest request = new MeniUpsertRequest();
@@ -36,8 +36,8 @@ namespace RestoranWinUI.Meni
         private  void frmNoviMeni_Load(object sender, EventArgs e)
         {
             RefreshKontrole();
-            stavke = new List<StavkeMeniaVM>();
-            stavkeMenija = new List<StavkeMenia>();
+            stavke = new List<StavkeMenijaVM>();
+            stavkeMenija = new List<StavkeMenija>();
 
         }
 
@@ -51,15 +51,15 @@ namespace RestoranWinUI.Meni
                 txtBNaziv.Text = m.Naziv;
                 if (stavke.Count()==0)
                 {
-                    StavkeMeniaSearchRequest req = new StavkeMeniaSearchRequest() { MeniId = m.MeniId };
-                    stavkeMenija = await serviceStavkeMenia.Get<List<Restoran.Model.StavkeMenia>>(req);
+                    StavkeMenijaSearchRequest req = new StavkeMenijaSearchRequest() { MeniId = m.MeniId };
+                    stavkeMenija = await serviceStavkeMenia.Get<List<Restoran.Model.StavkeMenija>>(req);
 
                     foreach (var item in stavkeMenija)
                     {
-                        stavke.Add(new StavkeMeniaVM()
+                        stavke.Add(new StavkeMenijaVM()
                         {
 
-                            StavkeMeniaId = item.StavkeMeniaId,
+                            StavkeMenijaId = item.StavkeMenijaId,
                             ArtikalId = item.ArtikalId,
                             Naziv = item.Artikal.Naziv,
                             Slika = item.Artikal.Slika,
@@ -67,7 +67,8 @@ namespace RestoranWinUI.Meni
                             CijenaSaPDV = item.CijenaSaPDV,
                             Kategorija = item.Kategorija.Naziv,
                             MeniId = item.MeniId,
-                            Popust = item.Popust
+                            Popust = item.Popust,
+                            Aktivan=item.Aktivan
                         });
                     }
                 }
@@ -102,9 +103,9 @@ namespace RestoranWinUI.Meni
             if (artikal!=null)
             {
 
-                StavkeMenia s = new StavkeMenia()
+                StavkeMenija s = new StavkeMenija()
                 {
-                    StavkeMeniaId = 0,
+                    StavkeMenijaId = 0,
                     ArtikalId = artikal.ArtikalId,
                     Artikal = artikal,
                     Cijena = artikal.Cijena,
@@ -112,22 +113,26 @@ namespace RestoranWinUI.Meni
                     Kategorija = artikal.Kategorija,
                     KategorijaId = artikal.KategorijaId,
                     PDV = artikal.PDV,
-                        MeniId = 0,
-                        Popust = artikal.Popust
+                    MeniId = 0,
+                    Popust = artikal.Popust,
+                    Aktivan=true
+                        
                     };
                     stavkeMenija.Add(s);
-                    StavkeMeniaVM sm = new StavkeMeniaVM()
-                    {
-                        StavkeMeniaId = 0,
-                        ArtikalId = artikal.ArtikalId,
-                        Naziv = artikal.Naziv,
-                        Slika = artikal.Slika,
-                        Cijena = artikal.Cijena,
-                        CijenaSaPDV = artikal.CijenaSaPdv,
-                        Kategorija = artikal.Kategorija.Naziv,
-                        MeniId = 0,
-                        PDV = artikal.PDV,
-                        Popust = artikal.Popust
+                StavkeMenijaVM sm = new StavkeMenijaVM()
+                {
+                    StavkeMenijaId = 0,
+                    ArtikalId = artikal.ArtikalId,
+                    Naziv = artikal.Naziv,
+                    Slika = artikal.Slika,
+                    Cijena = artikal.Cijena,
+                    CijenaSaPDV = artikal.CijenaSaPdv,
+                    Kategorija = artikal.Kategorija.Naziv,
+                    MeniId = 0,
+                    PDV = artikal.PDV,
+                    Popust = artikal.Popust,
+                    Aktivan = true
+                        
                     };
                     stavke.Add(sm);
                     RefreshKontrole();
@@ -187,16 +192,12 @@ namespace RestoranWinUI.Meni
                 sm.CijenaSaPDV = s.CijenaSaPDV;
                 sm.Popust = s.Popust;
                 sm.PDV = s.PDV;
+                sm.Aktivan = s.Aktivan;
                 stavkeMenija.Add(sm);
             
                 RefreshKontrole();
             }
-            else if (frmstavka.Opcija == Global.Ponisti)
-            {
-                stavke.Remove(stavka);
-                var sm = stavkeMenija.Where(x => x.ArtikalId == stavka.ArtikalId).FirstOrDefault();
-                stavkeMenija.Remove(sm);
-            }
+       
             frmstavka.Close();
             RefreshDataGrtidView();
         }
