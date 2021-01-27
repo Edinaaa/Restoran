@@ -13,7 +13,7 @@ namespace RestoranMobile
         public static string password { get; set; }
         public static string username { get; set; }
 #if DEBUG
-      private  string _APIUrl = "http://192.168.100.12:8090/api";
+      private  string _APIUrl = "http://10.0.2.2:8090/api";
         //8090 54813
 #endif
 #if RELEASE

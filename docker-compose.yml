@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   db:
-    image: "edinat/db:130152db"
+    image: "edinat/db:130152"
     ports:
       - "1433:1433"
   restoran:

@@ -1,5 +1,6 @@
 ﻿using Restoran.Model;
 using Restoran.Model.Request;
+using RestoranMobile.Helper;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,6 +33,12 @@ namespace RestoranMobile.ViewModels
                 SetProperty(ref kombinacija, value);
             }
 
+        }
+
+        internal async void OnClickedDodajUNarudzbu()
+        {
+            Singleton.AddItemProuzvodiListSvi(kombinacija.KombinacijaId, false);
+            await Shell.Current.GoToAsync("..");
         }
 
         public ICommand StavkeKombinacijeCommand { get; set; }

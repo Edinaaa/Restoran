@@ -24,5 +24,10 @@ namespace RestoranMobile.Views
             base.OnAppearing();
             model.OnAppearing();
         }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            model.OnClickedDodajUNarudzbu();
+        }
     }
 }

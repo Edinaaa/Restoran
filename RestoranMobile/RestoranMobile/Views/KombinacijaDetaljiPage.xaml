@@ -82,7 +82,7 @@
                 </CollectionView>
 
             </RefreshView>
-
+            <Button Text="Dodaj u narudzbu" Clicked="Button_Clicked"></Button>
 
         </StackLayout>
    

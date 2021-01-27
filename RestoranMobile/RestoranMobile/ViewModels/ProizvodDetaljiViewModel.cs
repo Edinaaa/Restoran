@@ -1,4 +1,5 @@
 ﻿using Restoran.Model;
+using RestoranMobile.Helper;
 using RestoranMobile.Models;
 using System;
 using System.Collections.Generic;
@@ -34,11 +35,19 @@ namespace RestoranMobile.ViewModels
               
             }
         }
+
+        internal async void OnClickedDodajUNarudzbu()
+        {
+            Singleton.AddItemProuzvodiListSvi(Artikal.ArtikalId, true);
+            await Shell.Current.GoToAsync("..");
+        }
+
         private async void OnAtrikalIdSet(string value)
         {
             Title = "Datalji proizvoda";
             StavkeMenija sm=await  service.GetById<Restoran.Model.StavkeMenija>(int.Parse(value));
             Artikal = new Artikal() {
+                ArtikalId = sm.StavkeMenijaId,
                 Slika = sm.Artikal.Slika,
                 Naziv= sm.Artikal.Naziv,
                 Cijena=sm.Cijena,

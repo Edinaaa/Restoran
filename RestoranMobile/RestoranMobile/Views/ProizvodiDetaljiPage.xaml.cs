@@ -13,10 +13,20 @@ namespace RestoranMobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProizvodiDetaljiPage : ContentPage
     {
+        ProizvodDetaljiViewModel model = null;
         public ProizvodiDetaljiPage()
         {
             InitializeComponent();
-            BindingContext =new ProizvodDetaljiViewModel();
+            BindingContext =model=new ProizvodDetaljiViewModel();
+        }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+        }
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            model.OnClickedDodajUNarudzbu();
         }
     }
 }

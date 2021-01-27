@@ -79,7 +79,7 @@ namespace RestoranMobile.ViewModels
 
         public async void DodajZahtjev()
         {
-            if (string.IsNullOrWhiteSpace(NazivZahtejeva) && NazivZahtejeva.Length>100)
+            if (string.IsNullOrWhiteSpace(NazivZahtejeva) || NazivZahtejeva.Length>100)
             {
                 await Application.Current.MainPage.DisplayAlert("Novi zahtjev", "Zahtjev nije dodan, mozete unjeti tekst manji od 100 kataktera.", "Zatvori");
 

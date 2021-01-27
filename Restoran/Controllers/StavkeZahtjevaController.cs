@@ -17,25 +17,25 @@ namespace Restoran.Controllers
     [ApiController]
     public class StavkeZahtjevaController 
     {
-        private readonly IZahtjevService service;
-        public StavkeZahtjevaController(IZahtjevService service) { this.service = service; }
+        private readonly IStavkeZahtjevaService service;
+        public StavkeZahtjevaController(IStavkeZahtjevaService service) { this.service = service; }
 
         [HttpGet]
-        public List<Model.Zahtjev> Get([FromQuery] object request)
+        public List<Model.StavkeZahtjeva> Get([FromQuery] StavkeZahtjevaSerachRequest request)
         {
 
             return service.Get(request);
         }
 
         [HttpGet("{id}")]
-        public Model.Zahtjev GetById(int id)
+        public Model.StavkeZahtjeva GetById(int id)
         {
 
             return service.GetById(id);
         }
     
         [HttpPost]
-        public Model.Zahtjev Insert(ZahtjevUpsertRequest reqests)
+        public Model.StavkeZahtjeva Insert(StavkeZahtjevaUpsertRequest reqests)
         {
             return service.Insert(reqests);
 
@@ -43,7 +43,7 @@ namespace Restoran.Controllers
         }
         [Authorize(Roles = "Konobar")]
         [HttpPut("{id}")]
-        public Model.Zahtjev Update(int id, [FromBody] ZahtjevUpsertRequest request)
+        public Model.StavkeZahtjeva Update(int id, [FromBody] StavkeZahtjevaUpsertRequest request)
         {
 
             return service.Update(id, request);
