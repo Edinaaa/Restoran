@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Restoran.Database
@@ -18,6 +19,8 @@ namespace Restoran.Database
         public Kombinacija Kombinacija { get; set; }
         public int ArtikalId { get; set; }
         public Artikal Artikal { get; set; }
+        [Required(ErrorMessage = "Obavezno polje.")]
+
         public float Kolicina { get; set; }
     }
 }

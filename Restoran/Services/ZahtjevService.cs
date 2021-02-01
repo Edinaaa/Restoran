@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Restoran.Database;
+using Restoran.Exceptions;
 using Restoran.Model;
 using Restoran.Model.Request;
 namespace Restoran.Services
@@ -32,6 +33,11 @@ namespace Restoran.Services
 
         Model.Zahtjev IZahtjevService.Insert(ZahtjevUpsertRequest reqests)
         {
+            var zahtjevi = _context.Zahtjevs.Where(z=>z.Naziv==reqests.Naziv).ToList();
+                if (zahtjevi.Count() > 0)
+            {
+                throw new UserException("Zahtjev koji pokusavate dodati vec postoji.");
+            }
             var entity = _mapper.Map<Database.Zahtjev>(reqests);
 
             _context.Zahtjevs.Add(entity);

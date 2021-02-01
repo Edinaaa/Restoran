@@ -180,9 +180,18 @@ namespace RestoranWinUI.Korisnici
             Global.ValidatingSpolObaveznoPolje(ref rbtnZensko, rbtnMusko, e, errorProvider);
         }
 
-        private void txtKorisnickoIme_Validating(object sender, CancelEventArgs e)
+        private async void txtKorisnickoIme_Validating(object sender, CancelEventArgs e)
         {
             Global.ValidatingObaveznoPolje(ref txtKorisnickoIme, e, errorProvider);
+            if (String.IsNullOrWhiteSpace( errorProvider.GetError(txtKorisnickoIme)))
+            {
+                KorisniciSeachRequest request = new KorisniciSeachRequest() { 
+                KorisnickoIme=txtKorisnickoIme.Text
+                };
+                List<Korisnik> korisnici =await service.Get<List<Korisnik>>(request);
+                Global.ValidatingUnique(ref txtKorisnickoIme,korisnici.Count()>0, e, errorProvider);
+
+            }
         }
 
         private void txtPassword_Validating(object sender, CancelEventArgs e)
@@ -235,7 +244,7 @@ namespace RestoranWinUI.Korisnici
             if (IsZaposlenik())
             {
 
-                Global.ValidatingDatumManji(DateTime.Now,ref dtpDatumRodenja,15,"Zaposlen ne moze biti mladji od 15g.", e, errorProvider);
+                Global.ValidatingGodiste(DateTime.Now,ref dtpDatumRodenja,15,"Zaposlen ne moze biti mladji od 15g.", e, errorProvider);
 
             }
         }
@@ -245,7 +254,7 @@ namespace RestoranWinUI.Korisnici
             if (IsZaposlenik())
             {
 
-                Global.ValidatingDatumVeci(DateTime.Now, ref dtpDatumZaposljavanja, "Datum zaposljavanja ne moze biti veci od trenutrnog.", e, errorProvider);
+                Global.ValidatingDatumManji(DateTime.Now, ref dtpDatumZaposljavanja, "Datum zaposljavanja ne moze biti veci od trenutrnog.", e, errorProvider);
 
             }
         }

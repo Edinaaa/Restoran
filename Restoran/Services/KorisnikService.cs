@@ -125,6 +125,7 @@ namespace Restoran.Services
         }
         private void Validiraj(KorisniciUpsertReqests reqests, bool insert=false) {
 
+            var korisnici = _context.Korisniks.Where(x => x.KorisnickoIme == reqests.KorisnickoIme).ToList();
             if (insert && (string.IsNullOrWhiteSpace(reqests.Password) ||
                 string.IsNullOrWhiteSpace(reqests.PasswordPotvrda)  ||
                 reqests.Uloge == null || reqests.Uloge.Count == 0))
@@ -157,7 +158,10 @@ namespace Restoran.Services
                 throw new UserException("Ime, prezime ili korisnicko ime mogu sadrzavati po najvise 30 karaktera.");
 
             }
-    
+            else if (korisnici.Count()>0)
+            {
+                throw new UserException("Daberite neko drugo korisnicko ime.");
+            }
             else if (reqests.Spol.Length > 1 || !(reqests.Spol.Equals("M") || reqests.Spol.Equals("Z")))
             {
                 throw new UserException("Spol moze sadrzavati najvise jedna karakter (M ili Z).");

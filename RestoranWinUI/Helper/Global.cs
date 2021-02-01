@@ -65,7 +65,21 @@ namespace RestoranWinUI.Helper
 
             }
         }
-  
+        public static void ValidatingUnique(ref TextBox tb,bool uslov, CancelEventArgs e, ErrorProvider errorProvider)
+        {
+
+
+            if (uslov)
+            {
+                e.Cancel = true;
+                errorProvider.SetError(tb, "Isti sadrzaj vec postoji, probajte unjeti nesto drugo.");
+            }
+            else
+            {
+                errorProvider.SetError(tb, null);
+
+            }
+        }
         public static bool ValidatingObaveznoPoljeBool(ref TextBox tb, CancelEventArgs e, ErrorProvider errorProvider)
         {
 
@@ -129,7 +143,7 @@ namespace RestoranWinUI.Helper
                 errorProvider.SetError(rb1, null);
             }
         }
-        public static void ValidatingDatumManji( DateTime date2, ref DateTimePicker date1,int broj, string poruka, CancelEventArgs e, ErrorProvider errorProvider)
+        public static void ValidatingGodiste( DateTime date2, ref DateTimePicker date1,int broj, string poruka, CancelEventArgs e, ErrorProvider errorProvider)
         {
 
 
@@ -154,6 +168,21 @@ namespace RestoranWinUI.Helper
             }
             else
             { errorProvider.SetError(date1, null); }
+        }
+        public static void ValidatingDatumManji(DateTime date2, ref DateTimePicker date1, string poruka, CancelEventArgs e, ErrorProvider errorProvider)
+        {
+
+            if (date1.Value.Date.Year > date2.Date.Year
+                            || (date1.Value.Date.Year == date2.Date.Year && date1.Value.Date.Month > date2.Date.Month)
+                            || (date1.Value.Date.Year == date2.Date.Year && date1.Value.Date.Month == date2.Date.Month && date1.Value.Date.Day > date2.Date.Day))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(date1, poruka);
+            }
+            else
+            { errorProvider.SetError(date1, null); }
+
+
         }
         public static void ValidatingDatumManjiOdTrenutnog(ref DateTimePicker date1,string poruka, CancelEventArgs e, ErrorProvider errorProvider)
         {

@@ -12,8 +12,17 @@ namespace Restoran.Database {
         public eRestoranContext() { }
         public eRestoranContext(DbContextOptions<eRestoranContext> options): base(options) { }
 
-        
-        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Korisnik>().HasIndex(k => k.KorisnickoIme).IsUnique();
+            modelBuilder.Entity<JedinicaMjere>().HasIndex(j => j.Naziv).IsUnique();
+            modelBuilder.Entity<Kategorija>().HasIndex(k => k.Naziv).IsUnique();
+            modelBuilder.Entity<Uloge>().HasIndex(u => u.Naziv).IsUnique();
+            modelBuilder.Entity<Zahtjev>().HasIndex(z => z.Naziv).IsUnique();
+
+        }
+
+
         public virtual DbSet<Artikal> Artikli { get; set; }
         public virtual DbSet<JedinicaMjere> JedinicaMjeres { get; set; }
         public virtual DbSet<Kategorija> Kategorijas { get; set; }

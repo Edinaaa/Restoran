@@ -11,38 +11,15 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout Padding="10,0,10,0" VerticalOptions="Center">
-            <Frame  BackgroundColor="DarkGray"  CornerRadius="5" HasShadow="True">
-                <StackLayout>
-                <Label Text="Spol"></Label>
-                    <StackLayout Orientation="Horizontal">
-                        <RadioButton Text="Zensko" IsChecked="{Binding Zensko}" />
-                        <!--Radio buttun ne prikazuje text-->
-                        <Label Text="Zensko"  VerticalOptions="Center"></Label>
-                    </StackLayout>
-                    <StackLayout Orientation="Horizontal">
-                        <RadioButton Text="Musko" IsChecked="{Binding Musko}"/>
-                        <!--Radio buttun ne prikazuje text-->
-                        <Label Text="Musko" VerticalOptions="Center"></Label>
-                    </StackLayout>
-                    <Label Text="Godiste"></Label>
-                    <DatePicker
-                   x:Name="DatumRodenja"
-                   Date="{Binding DatumRodenja}"
-                   HorizontalOptions="Start"
-                   VerticalOptions="Center"
-                   FontSize="16"  />
-                </StackLayout>
-            </Frame>
-            <Label Text="ili" HorizontalOptions="Center"></Label>
-            <Frame BackgroundColor="DarkGray"  CornerRadius="5" HasShadow="True"> 
-            <StackLayout Orientation="Vertical">
+            <Image Source="logo.png"></Image>
 
+            <StackLayout Orientation="Vertical">
                 <Label Text="Korisnicko ime"></Label>
                 <Entry Text="{Binding Username}" ></Entry>
                 <Label Text="password"></Label>
                 <Entry Text="{Binding Password}" IsPassword="True"></Entry>
                 </StackLayout>
-            </Frame>
+            
             <!--  Command="{Binding LoginCommand}"-->
             <Button VerticalOptions="Center" Text="Login" Clicked="Button_Clicked"/>
             <Button VerticalOptions="Center" Text="Registracija" Clicked="Button_Clicked_1"/>

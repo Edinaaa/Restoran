@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Restoran.Database
@@ -13,9 +14,16 @@ namespace Restoran.Database
         public Narudzba Narudzba { get; set; }
         public int? KombinacijaId { get; set; }
         public Kombinacija Kombinacija { get; set; }
+        [Required(ErrorMessage = "Obavezno polje.")]
         public double Cijena { get; set; }
+        [Required(ErrorMessage = "Obavezno polje.")]
+
         public int Pdv { get; set; }
+        [Required(ErrorMessage = "Obavezno polje.")]
+
         public float Kolicina { get; set; }
+        [Required(ErrorMessage = "Obavezno polje.")]
+
         public double CijenaSaPdv { get; set; }
 
 

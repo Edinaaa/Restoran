@@ -20,9 +20,7 @@ namespace RestoranMobile.ViewModels
     //    public ICommand LoginCommand { get; }
         string _username;
         string _password;
-        bool _musko ;
-        bool _zensko;
-        DateTime _datumRodenja;
+     
 
 
         public string Username {
@@ -34,21 +32,7 @@ namespace RestoranMobile.ViewModels
             get { return _password; }
             set { SetProperty(ref _password, value); }
         }
-        public bool Musko
-        {
-            get { return _musko; }
-            set { SetProperty(ref _musko, value); }
-        }
-        public bool Zensko
-        {
-            get { return _zensko; }
-            set { SetProperty(ref _zensko, value); }
-        }
-        public DateTime DatumRodenja
-        {
-            get { return _datumRodenja; }
-            set { SetProperty(ref _datumRodenja, value); }
-        }
+    
         public LoginViewModel()
         {
            // LoginCommand = new Command(async () => await OnLoginClicked());
@@ -69,32 +53,7 @@ namespace RestoranMobile.ViewModels
                     Singleton.IdKorisnika = k[0].KorisnikId;
 
                 }
-                else
-                {
-                   
-                    KorisniciUpsertReqests requests = new KorisniciUpsertReqests() { 
-                   
-                    DatumRodenja=DatumRodenja
-                    
-                    };
-                    if (Musko && !Zensko)
-                    {
-                        requests.Spol = "M";
-                    }
-                    else
-                    {
-                        requests.Spol = "Z";
-
-                    }
-                    Korisnik novi = await serviceKupac.Insert<Restoran.Model.Korisnik>(requests);
-                    if (novi!=null)
-                    {
-                        APIService.username = novi.KorisnickoIme;
-                        APIService.password = novi.KorisnickoIme;
-                        Singleton.IdKorisnika = novi.KorisnikId;
-                    }
-                   
-                }
+               
 
                 Application.Current.MainPage = new AppShell();
             }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restoran.Database;
 
 namespace Restoran.Migrations
 {
     [DbContext(typeof(eRestoranContext))]
-    partial class eRestoranContextModelSnapshot : ModelSnapshot
+    [Migration("20210201103814_korisnik")]
+    partial class korisnik
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,9 +44,7 @@ namespace Restoran.Migrations
                         .HasColumnType("real");
 
                     b.Property<string>("Naziv")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PDV")
                         .HasColumnType("int");
@@ -53,12 +53,9 @@ namespace Restoran.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Sastav")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Slika")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.HasKey("ArtikalId");
@@ -78,14 +75,9 @@ namespace Restoran.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Naziv")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(15)")
-                        .HasMaxLength(15);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("JedinicaMjereId");
-
-                    b.HasIndex("Naziv")
-                        .IsUnique();
 
                     b.ToTable("JedinicaMjeres");
                 });
@@ -98,14 +90,9 @@ namespace Restoran.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Naziv")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("KategorijaId");
-
-                    b.HasIndex("Naziv")
-                        .IsUnique();
 
                     b.ToTable("Kategorijas");
                 });
@@ -124,9 +111,7 @@ namespace Restoran.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Naziv")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PDV")
                         .HasColumnType("int");
@@ -135,7 +120,6 @@ namespace Restoran.Migrations
                         .HasColumnType("int");
 
                     b.Property<byte[]>("Slika")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.HasKey("KombinacijaId");
@@ -159,7 +143,6 @@ namespace Restoran.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Ime")
-                        .IsRequired()
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
 
@@ -171,20 +154,16 @@ namespace Restoran.Migrations
                         .HasMaxLength(30);
 
                     b.Property<string>("LozinkaHesh")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LozinkaSalt")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Prezime")
-                        .IsRequired()
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
 
                     b.Property<byte[]>("Slika")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Spol")
@@ -193,10 +172,6 @@ namespace Restoran.Migrations
                         .HasMaxLength(1);
 
                     b.HasKey("KorisnikId");
-
-                    b.HasIndex("KorisnickoIme")
-                        .IsUnique()
-                        .HasFilter("[KorisnickoIme] IS NOT NULL");
 
                     b.ToTable("Korisniks");
                 });
@@ -237,7 +212,6 @@ namespace Restoran.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Naziv")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Vazeci")
@@ -459,14 +433,9 @@ namespace Restoran.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Naziv")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(15)")
-                        .HasMaxLength(15);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UlogeId");
-
-                    b.HasIndex("Naziv")
-                        .IsUnique();
 
                     b.ToTable("Uloges");
                 });
@@ -479,14 +448,9 @@ namespace Restoran.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Naziv")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ZahtjevId");
-
-                    b.HasIndex("Naziv")
-                        .IsUnique();
 
                     b.ToTable("Zahtjevs");
                 });

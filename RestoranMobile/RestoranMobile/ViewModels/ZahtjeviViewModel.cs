@@ -79,18 +79,40 @@ namespace RestoranMobile.ViewModels
 
         public async void DodajZahtjev()
         {
+            bool postoji = false;
+            foreach (var item in Zahtjevi)
+            {
+                if (item.Naziv.Equals(NazivZahtejeva))
+                {
+                    postoji = true;
+                }
+            }
             if (string.IsNullOrWhiteSpace(NazivZahtejeva) || NazivZahtejeva.Length>100)
             {
                 await Application.Current.MainPage.DisplayAlert("Novi zahtjev", "Zahtjev nije dodan, mozete unjeti tekst manji od 100 kataktera.", "Zatvori");
 
             }
-            ZahtjevUpsertRequest r = new ZahtjevUpsertRequest()
+            else if (postoji)
             {
-                Naziv=NazivZahtejeva
-            };
+                await Application.Current.MainPage.DisplayAlert("Novi zahtjev", "Zahtjev koji pokusavate dodati vec postoji.", "Zatvori");
 
-            await service.Insert<Zahtjev>(r);
-            await Application.Current.MainPage.DisplayAlert("Novi zahtjev", "Uspjesno dodan zahtjev.", "Zatvori");
+            }
+            else
+            {
+                ZahtjevUpsertRequest r = new ZahtjevUpsertRequest()
+                {
+                    Naziv = NazivZahtejeva
+                };
+
+             Zahtjev novi=   await service.Insert<Zahtjev>(r);
+                if (novi!=null)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Novi zahtjev", "Uspjesno dodan zahtjev.", "Zatvori");
+                    Zahtjevi.Add(novi);
+                }
+
+            }
+          
         }
 
     }

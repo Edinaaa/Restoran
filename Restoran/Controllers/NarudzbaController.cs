@@ -14,7 +14,7 @@ using SQLitePCL;
 
 namespace Restoran.Controllers
 {
-    [Authorize(Roles = "Konobar,Kupac,Gost")]
+    [Authorize(Roles = "Konobar,Kupac")]
     [Route("api/[controller]")]
     [ApiController]
     public class NarudzbaController : ControllerBase
