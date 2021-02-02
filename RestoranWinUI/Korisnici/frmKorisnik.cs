@@ -41,12 +41,7 @@ namespace RestoranWinUI.Korisnici
                 txtIme.Text = korisnik.Ime;
                 txtPrezime.Text = korisnik.Prezime;
                 txtKorisnickoIme.Text = korisnik.KorisnickoIme;
-                if (korisnik.Slika.Length>0)
-                {
-                    pbxSlika.Image = Global.ByteToImage(korisnik.Slika);
-                    request.Slika = korisnik.Slika;
-                }
-             
+
                 if (korisnik.Spol == "M")
                 {
                     rbtnMusko.Checked = true;
@@ -63,6 +58,7 @@ namespace RestoranWinUI.Korisnici
                 }
                 KorisnikUlogeSerachRequest requestKu = new KorisnikUlogeSerachRequest() { KorisnikId = (int)_id };
                 List<Restoran.Model.KorisnikUloga> ku = await korisnikUlogeService.Get<List<Restoran.Model.KorisnikUloga>>(requestKu);
+                bool kupac = false;
                 for (int i = 0; i < ListaUloga.Count; i++)
                 {
 
@@ -70,13 +66,24 @@ namespace RestoranWinUI.Korisnici
                     {
                         if (ListaUloga[i].UlogeId == x.UlogeId)
                         {
+
                             clbUloge.SetItemChecked(i, true);
                         }
+                        if (ListaUloga[i].Naziv.Equals("Kupac"))
+                        {
+                            kupac = true;
+                        }
                     }
+
+
+                    if (korisnik.Slika.Length > 0 && !kupac)
+                    {
+                        pbxSlika.Image = Global.ByteToImage(korisnik.Slika);
+                        request.Slika = korisnik.Slika;
+                    }
+
+
                 }
-
-
-
             }
         }
         void setUloge()
@@ -107,6 +114,7 @@ namespace RestoranWinUI.Korisnici
             request.Uloge = uloge;
             request.Spol = spol;
         }
+
         private async void btnSnimi_Click(object sender, EventArgs e)
         {
             if (this.ValidateChildren())
@@ -189,7 +197,24 @@ namespace RestoranWinUI.Korisnici
                 KorisnickoIme=txtKorisnickoIme.Text
                 };
                 List<Korisnik> korisnici =await service.Get<List<Korisnik>>(request);
-                Global.ValidatingUnique(ref txtKorisnickoIme,korisnici.Count()>0, e, errorProvider);
+                bool validno = false;
+                if (korisnici != null)
+                {
+                    if (_id!=null && korisnici[0].KorisnikId != _id)
+                    {//ako trenutno posmatranom pokusavamo postaviti korisnicko ime koje vec posjeduje neki drugi korisnik
+                        validno = false;
+                    }
+                    else if (_id != null && korisnici[0].KorisnikId == _id)
+                    {//ako je pronadeni korisnik koji posjeduje isto korisnicko ime zapravo nas posmatrani korisnik
+                        validno = true;
+                    }
+                  
+                }
+                else
+                {// ni jedan korisnik nema takvo korisnicko ime
+                    validno = true;
+                }
+                Global.ValidatingUnique(ref txtKorisnickoIme,!validno, e, errorProvider);
 
             }
         }
@@ -262,7 +287,7 @@ namespace RestoranWinUI.Korisnici
      
         private void txtSlika_Validating(object sender, CancelEventArgs e)
         {
-            if (_id==null)
+            if (_id==null && IsZaposlenik())
             {
                 Global.ValidatingObaveznoPolje(ref txtSlika, e, errorProvider);
 

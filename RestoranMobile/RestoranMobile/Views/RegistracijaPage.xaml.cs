@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using RestoranMobile.Helper;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,10 +14,12 @@ namespace RestoranMobile.Views
     public partial class RegistracijaPage : ContentPage
     {
         RegistracijaViewModel model = null;
+    
         public RegistracijaPage()
         {
             InitializeComponent();
             BindingContext = model = new RegistracijaViewModel();
+
         }
 
         private void DatumRodenja_DateSelected(object sender, DateChangedEventArgs e)
@@ -30,5 +32,7 @@ namespace RestoranMobile.Views
           model.OnBtnSnimiClicked();
             Application.Current.MainPage = new LoginPage();
         }
+
+     
     }
 }

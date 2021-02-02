@@ -114,6 +114,7 @@
                     FontSize="16"  />
             </Grid>
 
+          
             <Button Text="Snimi" Clicked="Button_Clicked" Margin="10"></Button>
         </StackLayout>
     </ContentPage.Content>

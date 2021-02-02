@@ -176,7 +176,7 @@
             // 
             this.dtpDatumRodenja.Location = new System.Drawing.Point(125, 106);
             this.dtpDatumRodenja.MaxDate = new System.DateTime(2004, 1, 1, 0, 0, 0, 0);
-            this.dtpDatumRodenja.MinDate = new System.DateTime(1921, 1, 1, 0, 0, 0, 0);
+            this.dtpDatumRodenja.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
             this.dtpDatumRodenja.Name = "dtpDatumRodenja";
             this.dtpDatumRodenja.Size = new System.Drawing.Size(200, 20);
             this.dtpDatumRodenja.TabIndex = 12;

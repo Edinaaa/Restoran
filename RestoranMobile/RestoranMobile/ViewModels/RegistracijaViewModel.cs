@@ -28,7 +28,7 @@ namespace RestoranMobile.ViewModels
         public string KorisnickoIme { get { return korisnickoIme; } set { SetProperty(ref korisnickoIme, value); } }
         public string Lozinka { get { return lozinka; } set { SetProperty(ref lozinka, value); } }
         public string LozinkaPotvrda { get { return lozinkaPotvrda; } set { SetProperty(ref lozinkaPotvrda, value); } }
-        KorisniciUpsertReqests reqests = new KorisniciUpsertReqests();
+       public KorisniciUpsertReqests reqests = new KorisniciUpsertReqests();
         public void OnAppiring() {
 
             IsBusy = true;
@@ -72,6 +72,20 @@ namespace RestoranMobile.ViewModels
                 return false;
 
             }
+            else if (DateTime.Now.Year- datumRodenja.Year >120)
+            {
+                Application.Current.MainPage.DisplayAlert("Validacija", "Datum rodenja ne moze biti stariji od 120g.", "Zatvori.");
+
+                return false;
+
+            }
+            else if (DateTime.Now.Year - datumRodenja.Year <8)
+            {
+                Application.Current.MainPage.DisplayAlert("Validacija", "Kupac ne moze biti mladji od 8g.", "Zatvori.");
+
+                return false;
+
+            }
             return true;
         }
         public async void OnBtnSnimiClicked() {
@@ -84,6 +98,7 @@ namespace RestoranMobile.ViewModels
                 reqests.Password = Lozinka;
                 reqests.PasswordPotvrda = LozinkaPotvrda;
                 reqests.DatumRodenja = DatumRodenja.Date;
+
                 if (SpolM && !SpolZ)
                 {
                     reqests.Spol = "M";

@@ -85,14 +85,14 @@ namespace Restoran.Services
         }
         private void Validiraj(KorisniciUpsertReqests reqests, bool insert = false)
         {
-
+            var korisnici = _context.Korisniks.Where(x => x.KorisnickoIme == reqests.KorisnickoIme).ToList();
             if (insert && string.IsNullOrWhiteSpace(reqests.Password) ||
                 string.IsNullOrWhiteSpace(reqests.PasswordPotvrda))
             {
                 throw new UserException("Sva polja su obavezna.");
 
             }
-            if (!string.IsNullOrWhiteSpace(reqests.Password) &&
+           if (!string.IsNullOrWhiteSpace(reqests.Password) &&
                 !string.IsNullOrWhiteSpace(reqests.PasswordPotvrda))
             {
                 if (reqests.Password != reqests.PasswordPotvrda)
@@ -100,6 +100,10 @@ namespace Restoran.Services
                     throw new UserException("Ne slazu se lozinka i lozinka potvrda.");
 
                 }
+            }
+            else if (korisnici.Count() > 0)
+            {
+                throw new UserException("Daberite neko drugo korisnicko ime.");
             }
             else if (string.IsNullOrWhiteSpace(reqests.Ime) ||
                 string.IsNullOrWhiteSpace(reqests.Prezime) ||
@@ -134,28 +138,8 @@ namespace Restoran.Services
         }
         public Model.Korisnik Insert(KorisniciUpsertReqests reqests)
         {
-            var korisnici = _context.Korisniks.ToList().Select(x => x.KorisnickoIme.StartsWith("Gost"));
-
-            while (String.IsNullOrWhiteSpace(reqests.KorisnickoIme))
-            {
-                reqests.KorisnickoIme = "Gost" + RandomString(10);
-                foreach (var item in korisnici)
-                {
-                    if (item.Equals(reqests.KorisnickoIme))
-                    {
-                        reqests.KorisnickoIme = "";
-                        break;
-                    }
-                }
-            }
-            if (reqests.KorisnickoIme.StartsWith("Gost"))
-            {
-                reqests.Password =reqests.KorisnickoIme;
-                reqests.PasswordPotvrda = reqests.KorisnickoIme;
-                reqests.Ime = "Gost";
-                reqests.Prezime = "Gost";
-
-            }
+           
+          
             Validiraj(reqests, true);
             var entity = _mapper.Map<Database.Korisnik>(reqests);
 

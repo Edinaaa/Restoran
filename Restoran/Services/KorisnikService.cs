@@ -123,9 +123,28 @@ namespace Restoran.Services
             var list = query.ToList();
             return _mapper.Map<List<Model.Korisnik>>(list);
         }
-        private void Validiraj(KorisniciUpsertReqests reqests, bool insert=false) {
+        private void Validiraj(KorisniciUpsertReqests reqests, bool insert=false, int id=0) {
 
             var korisnici = _context.Korisniks.Where(x => x.KorisnickoIme == reqests.KorisnickoIme).ToList();
+            bool komobar = false;
+            foreach (var item in reqests.Uloge)
+            {
+                var u = _context.Uloges.Where(x => x.UlogeId == item).FirstOrDefault();
+                if (u==null)
+                {
+                    throw new UserException("Uloga nije dostupna.");
+                }
+                else if (u.Naziv.Equals("Konobar"))
+                {
+                    komobar = true;
+                }
+            }
+            var uloge = _context.KorisnikUlogas.Where(x => x.Uloge.Naziv.Equals("Konobar") && x.Korisnik.KorisnickoIme.Equals(reqests.KorisnickoIme)).FirstOrDefault();
+            if (uloge!=null)
+            {
+                komobar = true;
+            }
+
             if (insert && (string.IsNullOrWhiteSpace(reqests.Password) ||
                 string.IsNullOrWhiteSpace(reqests.PasswordPotvrda)  ||
                 reqests.Uloge == null || reqests.Uloge.Count == 0))
@@ -145,8 +164,7 @@ namespace Restoran.Services
             else if (string.IsNullOrWhiteSpace(reqests.Ime) ||
                 string.IsNullOrWhiteSpace(reqests.Prezime) ||
                 string.IsNullOrWhiteSpace(reqests.KorisnickoIme) ||
-               reqests.DatumZaposljavanja==null ||
-               reqests.Slika==null ||
+            komobar && ( reqests.DatumZaposljavanja==null || reqests.Slika==null ) || 
                 string.IsNullOrWhiteSpace(reqests.Spol))
             {
                 throw new UserException("Sva polja su obavezna.");
@@ -158,21 +176,25 @@ namespace Restoran.Services
                 throw new UserException("Ime, prezime ili korisnicko ime mogu sadrzavati po najvise 30 karaktera.");
 
             }
-            else if (korisnici.Count()>0)
+            else if ((korisnici.Count()>0 && insert) ||(korisnici.Count()==1 && !insert && korisnici[0].KorisnikId!=id))
             {
-                throw new UserException("Daberite neko drugo korisnicko ime.");
+                throw new UserException("Odaberite neko drugo korisnicko ime.");
             }
             else if (reqests.Spol.Length > 1 || !(reqests.Spol.Equals("M") || reqests.Spol.Equals("Z")))
             {
                 throw new UserException("Spol moze sadrzavati najvise jedna karakter (M ili Z).");
 
             }
-            else if (DateTime.Now.Year - reqests.DatumRodenja.Year < 15)
+            else if (komobar &&  DateTime.Now.Year - reqests.DatumRodenja.Year < 15)
             {
                 throw new UserException("Zaposlenik ne moze biti mladji od 15g.");
 
             }
-            else if (DateTime.Now.Date < reqests.DatumZaposljavanja.GetValueOrDefault().Date)
+            else if (!komobar && DateTime.Now.Year - reqests.DatumRodenja.Year < 7 || DateTime.Now.Year - reqests.DatumRodenja.Year > 115)
+            {
+                throw new UserException("Kupac ne moze biti mladi od 7g, niti stariji od 115g.");
+            }
+            else if (komobar && DateTime.Now.Date < reqests.DatumZaposljavanja.GetValueOrDefault().Date)
             {
                 throw new UserException("Datum zeposljavanja ne moze biti veci od trenutnog.");
 
@@ -248,7 +270,7 @@ namespace Restoran.Services
         
         public Model.Korisnik Update(int id, KorisniciUpsertReqests reqests)
         {
-            Validiraj(reqests);
+            Validiraj(reqests,false,id);
 
             var entity = _context.Korisniks.Find(id);
             reqests.IznosKredita += entity.IznosKredita;

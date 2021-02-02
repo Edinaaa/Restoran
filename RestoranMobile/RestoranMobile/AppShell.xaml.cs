@@ -14,7 +14,6 @@ namespace RestoranMobile
             Shell.SetTabBarIsVisible(this, false);
             Routing.RegisterRoute(nameof(ProizvodiDetaljiPage), typeof(ProizvodiDetaljiPage));
             Routing.RegisterRoute(nameof(KombinacijaDetaljiPage), typeof(KombinacijaDetaljiPage));
-            Routing.RegisterRoute(nameof(RegistracijaPage), typeof(RegistracijaPage));
 
             Routing.RegisterRoute(nameof(IzvrsenaNarudzbaPage), typeof(IzvrsenaNarudzbaPage));
             Routing.RegisterRoute(nameof(KombinacijePonudePage), typeof(KombinacijePonudePage));

@@ -8403,7 +8403,10 @@ namespace RestoranMobile.Droid
 			public const int tooltip_frame_light = 2131165307;
 			
 			// aapt resource value: 0x7F07007C
-			public const int xamarin_logo = 2131165308;
+			public const int userp = 2131165308;
+			
+			// aapt resource value: 0x7F07007D
+			public const int xamarin_logo = 2131165309;
 			
 			static Drawable()
 			{
