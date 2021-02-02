@@ -137,7 +137,7 @@ namespace Restoran.Services
 
         private List<Preporuka> SetBrojNarudzbiKorisnika(int idKorisnika)
         {
-            var stavkenarudzbe = _context.StavkaNarudzbes.Where(x => x.Narudzba.KorisnikId == idKorisnika ).Include(x=>x.Kombinacija).Include(x=>x.StavkeMenia).ToList();
+            var stavkenarudzbe = _context.StavkaNarudzbes.Where(x => x.Narudzba.KorisnikId == idKorisnika ).Include(x=>x.Kombinacija).Include(x=>x.StavkeMenija).ToList();
             List<Preporuka> preporukak = new List<Preporuka>();
             List<Preporuka> preporukam = new List<Preporuka>();
 

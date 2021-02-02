@@ -17,7 +17,7 @@ namespace Restoran.Services
         }
         public override List<Model.StavkaNarudzbe> Get(StavkeNarudzbeSearchRequest search)
         {
-            var lista = _context.StavkaNarudzbes.Where(x => x.NarudzbaId == search.NaruszbaId).Include(x=>x.StavkeMenia.Artikal).Include(x=>x.Kombinacija).ToList();
+            var lista = _context.StavkaNarudzbes.Where(x => x.NarudzbaId == search.NaruszbaId).Include(x=>x.StavkeMenija.Artikal).Include(x=>x.Kombinacija).ToList();
             return _mapper.Map<List<Model.StavkaNarudzbe>>(lista);
         }
     }

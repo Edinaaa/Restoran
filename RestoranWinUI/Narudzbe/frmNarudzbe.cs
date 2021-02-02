@@ -43,14 +43,14 @@ namespace RestoranWinUI.Narudzbe
                 string s = "";
                 for (int i = 0; i < stavke.Count; i++)
                 {
-                    if (stavke[i].StavkeMeniaId == null)
+                    if (stavke[i].StavkeMenijaId == null)
                     {
                         s+= stavke[i].Kombinacija.Naziv;
                     }
                     else
                     {
 
-                        s+= stavke[i].StavkeMenia.Artikal.Naziv;
+                        s+= stavke[i].StavkeMenija.Artikal.Naziv;
                     }
                    
                     if (i+1!=stavke.Count)

@@ -16,14 +16,14 @@ namespace Restoran.Services
         }
         private List<Artikal> GetNajprodavanije() {
             var svi = _context.Artikli.ToList();
-            var narudzbas = _context.StavkaNarudzbes.Where(x => x.StavkeMenijaId != null).Include(x=>x.StavkeMenia.Artikal).ToList();
+            var narudzbas = _context.StavkaNarudzbes.Where(x => x.StavkeMenijaId != null).Include(x=>x.StavkeMenija.Artikal).ToList();
             List<int> broj = new List<int>();
             List<Artikal> artikli = new List<Artikal>();
 
             int najveci = -1;
             foreach (var item in svi)
             {
-                int novi = narudzbas.Where(x => x.StavkeMenia.ArtikalId == item.ArtikalId).Count();
+                int novi = narudzbas.Where(x => x.StavkeMenija.ArtikalId == item.ArtikalId).Count();
                 if (najveci<novi)
                 {
                     najveci = novi;

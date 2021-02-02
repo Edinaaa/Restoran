@@ -39,7 +39,7 @@ namespace RestoranWinUI.Narudzbe
             foreach (var item in stavke)
             {
                 StavkeNarudzbe s = new StavkeNarudzbe();
-                if (item.StavkeMeniaId == null)
+                if (item.StavkeMenijaId == null)
                 {
                     s.Naziv = item.Kombinacija.Naziv;
                     s.Slika = item.Kombinacija.Slika;
@@ -47,8 +47,8 @@ namespace RestoranWinUI.Narudzbe
                 else
                 {
 
-                    s.Naziv = item.StavkeMenia.Artikal.Naziv;
-                    s.Slika = item.StavkeMenia.Artikal.Slika;
+                    s.Naziv = item.StavkeMenija.Artikal.Naziv;
+                    s.Slika = item.StavkeMenija.Artikal.Slika;
                 }
                 s.Kolicina = item.Kolicina;
                 s.Pdv = item.Pdv;

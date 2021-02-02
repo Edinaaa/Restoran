@@ -7,8 +7,8 @@ namespace Restoran.Model
    public class StavkaNarudzbe
     {
         public int StavkaNarudzbeId { get; set; }
-        public int? StavkeMeniaId { get; set; }
-        public StavkeMenija StavkeMenia { get; set; }
+        public int? StavkeMenijaId { get; set; }
+        public StavkeMenija StavkeMenija { get; set; }
         public int? KombinacijaId { get; set; }
         public Kombinacija Kombinacija { get; set; }
         public int NarudzbaId { get; set; }

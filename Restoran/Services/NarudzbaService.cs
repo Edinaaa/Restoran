@@ -89,7 +89,7 @@ namespace Restoran.Services
             foreach (var item in insert.Stavke)
             {
                 Database.StavkaNarudzbe sn = new Database.StavkaNarudzbe() {
-                   StavkeMenijaId = item.StavkeMeniaId == 0?null:item.StavkeMeniaId,
+                   StavkeMenijaId = item.StavkeMenijaId == 0?null:item.StavkeMenijaId,
                     KombinacijaId = item.KombinacijaId==0? null:item.KombinacijaId,
                     Cijena = item.Cijena,// cijena je pomnozena za kolicinom na frontend dijelu
                     CijenaSaPdv = item.CijenaSaPdv,
