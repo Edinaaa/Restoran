@@ -38,8 +38,8 @@ namespace Restoran.Services
             {
                 throw new UserException("Zahtjev koji pokusavate dodati vec postoji.");
             }
-            var entity = _mapper.Map<Database.Zahtjev>(reqests);
-
+            // var entity = _mapper.Map<Database.Zahtjev>(reqests);
+            Database.Zahtjev entity = new Database.Zahtjev() { Naziv=reqests.Naziv};  
             _context.Zahtjevs.Add(entity);
             _context.SaveChanges();
             return _mapper.Map<Model.Zahtjev>(entity);

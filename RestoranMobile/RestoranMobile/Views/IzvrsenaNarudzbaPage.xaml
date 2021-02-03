@@ -36,20 +36,14 @@
                                 <ColumnDefinition Width="200"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"  x:Name="slika"   IsVisible="{Binding IsStavkaMenija}" Source="{Binding StavkeMenia.Artikal.Slika, Converter={StaticResource imgConv}}"></Image>
+                            <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"  x:Name="slika"  Source="{Binding Slika, Converter={StaticResource imgConv}}"></Image>
 
-                            <Label Grid.Row="0" Grid.Column="1"  Text="{Binding StavkeMenia.Artikal.Naziv}"
+
+                            <Label Grid.Row="0" Grid.Column="1"  Text="{Binding Naziv}"
                                        HorizontalOptions="EndAndExpand"
                                        LineBreakMode="NoWrap"
-                                       FontSize="16" 
-                                   IsVisible="{Binding IsStavkaMenija}"/>
-                            <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"    IsVisible="{Binding IsKombinacija}" Source="{Binding Kombinacija.Slika, Converter={StaticResource imgConv}}"></Image>
-
-                            <Label Grid.Row="0" Grid.Column="1"  Text="{Binding Kombinacija.Naziv}"
-                                       HorizontalOptions="EndAndExpand"
-                                       LineBreakMode="NoWrap"
-                                       FontSize="16" 
-                                   IsVisible="{Binding IsKombinacija}"/>
+                                       FontSize="16" />
+                           
                             <Label   Grid.Row="0" Grid.Column="2" Text="{Binding CijenaSaPdv, StringFormat= ' {0} KM'}"
                                        HorizontalOptions="End"
                                        LineBreakMode="NoWrap"

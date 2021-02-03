@@ -24,17 +24,6 @@ namespace RestoranMobile.Helper
         {
             throw new NotImplementedException();
         }
-        public static byte[] ImageToByte(ImageSource slika)
-        {
-            StreamImageSource sis = (StreamImageSource)slika;
-            System.Threading.CancellationToken cancellationToken = System.Threading.CancellationToken.None;
-            Task<Stream> task = sis.Stream(cancellationToken);
-            Stream stream = task.Result;
-            using (var ms = new MemoryStream())
-            {
-                stream.CopyTo(ms);
-                return ms.ToArray();
-            }
-        }
+      
     }
 }

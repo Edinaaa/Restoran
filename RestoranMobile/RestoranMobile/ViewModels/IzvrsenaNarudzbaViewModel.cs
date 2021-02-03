@@ -1,6 +1,8 @@
 ﻿using Restoran.Model;
 using Restoran.Model.Request;
 using RestoranMobile.Helper;
+using RestoranMobile.Models;
+using RestoranMobile.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -31,7 +33,7 @@ namespace RestoranMobile.ViewModels
         private List<Zahtjev> zahtjevi;
 
         public string[] Zahtjevi;
-        public ObservableCollection<StavkaNarudzbe> Stavke { get; set; } = new ObservableCollection<StavkaNarudzbe>();
+        public ObservableCollection<Item> Stavke { get; set; } = new ObservableCollection<Item>();
         public string OdabraniZahtjev { get { return odabraniZahtjev; } 
             set { SetProperty(ref odabraniZahtjev, value);
                 OnSetOdabraniZahtjev();
@@ -86,32 +88,34 @@ namespace RestoranMobile.ViewModels
         private async void SetZahtjevi()
         {
             zahtjevi = await serviceZahtjevi.Get<List<Zahtjev>>(null);
-            Zahtjevi = new string[zahtjevi.Count];
+            Zahtjevi = new string[zahtjevi.Count+ 1];
+            Zahtjevi[0] = "Dodaj novi zahtjev";
             for (int i = 0; i < zahtjevi.Count; i++)
             {
-                Zahtjevi[i] = zahtjevi[i].Naziv;
+                Zahtjevi[i+1] = zahtjevi[i].Naziv;
 
             }
         }
         private async void SetStavke() {
             StavkeNarudzbeSearchRequest request = new StavkeNarudzbeSearchRequest() { NaruszbaId = Narudzba.NarudzbaId };
             var lista = await serviceStavke.Get<List<StavkaNarudzbe>>(request);
-            if (lista[0].KombinacijaId!=null)
-            {
-                IsKombinacija = true;
-                IsStavkeMenija = false;
-            }
-            else
-            {
-                IsKombinacija = false;
-                IsStavkeMenija = false;
-
-            }
+    
             Ukupno = 0;
             foreach (var item in lista)
             {
                
-                Stavke.Add(item);
+                Stavke.Add(new Item() { 
+                Kolicina=item.Kolicina,
+                KategorijaId=0,
+                Selected=false,
+                Cijena=item.Cijena,
+                CijenaSaPdv=item.CijenaSaPdv,
+                KombinacijaId=item.KombinacijaId,
+                StavkeMenijaId=item.StavkeMenijaId,
+                PDV=item.Pdv,
+                Slika= item.KombinacijaId==null? item.StavkeMenija.Artikal.Slika: item.Kombinacija.Slika,
+                Naziv= item.KombinacijaId==null? item.StavkeMenija.Artikal.Naziv: item.Kombinacija.Naziv
+                });
                 Ukupno += item.CijenaSaPdv;
 
             }
@@ -126,7 +130,7 @@ namespace RestoranMobile.ViewModels
             SetZahtjevi();
         }
         private async void OnSetOdabraniZahtjev() {
-            int id = 0;
+            int id =0;
             foreach (var item in zahtjevi)
             {
                 if (item.Naziv==OdabraniZahtjev)
@@ -134,16 +138,25 @@ namespace RestoranMobile.ViewModels
                     id = item.ZahtjevId;
                 }
             }
-            if (id==0)
+            if (OdabraniZahtjev.Equals("Dodaj novi zahtjev"))
+            {
+                await Shell.Current.GoToAsync($"{nameof(NoviZahtjevPage)}?{nameof(NoviZahtjevViewModel)}");
+            }
+              else  if (id==0)
             {
                 return;
             }
-            StavkeZahtjevaUpsertRequest request = new StavkeZahtjevaUpsertRequest() {
-                ZahtjevId =id,
-                ZahtjevObradjen=false,
-                KorisnikId=Singleton.IdKorisnika
-            };
-            await serviceStavkeZahtjeva.Insert<StavkeZahtjeva>(request);
+            else
+            {
+
+                StavkeZahtjevaUpsertRequest request = new StavkeZahtjevaUpsertRequest()
+                {
+                    ZahtjevId = id,
+                    ZahtjevObradjen = false,
+                    KorisnikId = Singleton.IdKorisnika
+                };
+                await serviceStavkeZahtjeva.Insert<StavkeZahtjeva>(request);
+            }
         }
         public async void OnPlatiNarudzbu()
         {

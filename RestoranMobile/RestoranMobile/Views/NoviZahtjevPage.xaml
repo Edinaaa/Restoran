@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RestoranMobile.Views.NoviZahtjevPage"
+             Title="{Binding Title}">
+    <ContentPage.Content>
+        <StackLayout>
+
+            <Label Text="Naziv zahtjeva: " HorizontalOptions="Center"></Label>
+            <Entry Text="{Binding Naziv}" Margin="10"></Entry>
+            <Button Text="Dodaj novi zahtjev" Clicked="Button_Clicked" Margin="10"></Button>
+            </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
