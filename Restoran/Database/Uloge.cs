@@ -13,7 +13,6 @@ namespace Restoran.Database
         public int UlogeId { get; set; }
         [Required(ErrorMessage = "Obavezno polje.", AllowEmptyStrings = false)]
         [StringLength(15)]
-        [Index(IsUnique = true)]
         public string Naziv { get; set; }
 
     }

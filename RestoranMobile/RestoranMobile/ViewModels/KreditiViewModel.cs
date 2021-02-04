@@ -1,12 +1,9 @@
 ﻿using Restoran.Model;
 using RestoranMobile.Helper;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace RestoranMobile.ViewModels
 {
-  public  class KreditiViewModel: BaseViewModel
+    public  class KreditiViewModel: BaseViewModel
     {
         private readonly APIService _service = new APIService("Kupac");
         private Korisnik _korisnik;

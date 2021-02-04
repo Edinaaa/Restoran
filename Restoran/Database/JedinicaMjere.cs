@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,7 +13,6 @@ namespace Restoran.Database
         public int JedinicaMjereId { get; set; }
         [Required(ErrorMessage = "Obavezno polje.", AllowEmptyStrings =false)]
         [StringLength(15)]
-        [Index(IsUnique = true)]
         public string Naziv { get; set; }
 
     }

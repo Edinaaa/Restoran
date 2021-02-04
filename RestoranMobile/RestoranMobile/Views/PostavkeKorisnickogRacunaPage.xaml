@@ -77,12 +77,11 @@
                     Za radioButton se treba dodti experimantal flag u klase maimactity i appDelegate prije poziva Forms.Init
                     https://docs.microsoft.com/en-us/xamarin/xamarin-forms/internals/experimental-flags-->
                     <StackLayout Orientation="Horizontal">
-                        <RadioButton Text="Zensko" IsChecked="{Binding Zensko}" /><!--Radio buttun ne prikazuje text-->
+                        <RadioButton  IsChecked="{Binding Zensko}" />
                         <Label Text="Zensko"  VerticalOptions="Center"></Label>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
-                       <RadioButton Text="Musko" IsChecked="{Binding Musko}"/>
-                        <!--Radio buttun ne prikazuje text-->
+                       <RadioButton  IsChecked="{Binding Musko}"/>
                         <Label Text="Musko" VerticalOptions="Center"></Label>
                     </StackLayout>
                    

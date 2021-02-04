@@ -8,20 +8,20 @@ using Xamarin.Forms;
 
 namespace RestoranMobile.ViewModels
 {
-    [QueryProperty(nameof(StavkeMeniaId), nameof(StavkeMeniaId))]
+    [QueryProperty(nameof(StavkeMenijaId), nameof(StavkeMenijaId))]
   public  class ProizvodDetaljiViewModel: BaseViewModel
     {
-        private readonly APIService service = new APIService("StavkeMenia");
-        private string stavkeMeniaId;
+        private readonly APIService service = new APIService("StavkeMenija");
+        private string stavkeMenijaId;
   
         private Artikal artikal;
 
-        public string StavkeMeniaId
+        public string StavkeMenijaId
         {
-            get { return stavkeMeniaId; }
+            get { return stavkeMenijaId; }
             set
             {
-                SetProperty(ref stavkeMeniaId, value);
+                SetProperty(ref stavkeMenijaId, value);
                 OnAtrikalIdSet(value);
             }
         }

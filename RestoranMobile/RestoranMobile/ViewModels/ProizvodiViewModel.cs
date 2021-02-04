@@ -117,7 +117,7 @@ namespace RestoranMobile.ViewModels
 
             if (obj.StavkeMenijaId!=null)
             {
-                await Shell.Current.GoToAsync($"{nameof(ProizvodiDetaljiPage)}?{nameof(ProizvodDetaljiViewModel.StavkeMeniaId)}={obj.StavkeMenijaId.ToString()}");
+                await Shell.Current.GoToAsync($"{nameof(ProizvodiDetaljiPage)}?{nameof(ProizvodDetaljiViewModel.StavkeMenijaId)}={obj.StavkeMenijaId.ToString()}");
 
             }
             else if (obj.KombinacijaId != null)

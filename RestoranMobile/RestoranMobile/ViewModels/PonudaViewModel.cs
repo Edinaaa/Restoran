@@ -1,16 +1,14 @@
 ﻿using Restoran.Model;
 using RestoranMobile.Views;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace RestoranMobile.ViewModels
 {
- public   class PonudaViewModel: BaseViewModel
+    public   class PonudaViewModel: BaseViewModel
     {
         private readonly APIService service = new APIService("Ponuda");
         public ObservableCollection<Ponuda> Ponude { get; set; } = new ObservableCollection<Ponuda>();

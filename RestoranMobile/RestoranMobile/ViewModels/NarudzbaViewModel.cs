@@ -1,8 +1,5 @@
-﻿using Newtonsoft.Json;
-using Restoran.Model;
-using System;
+﻿using Restoran.Model;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Restoran.Model.Request;

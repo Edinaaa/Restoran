@@ -5,13 +5,11 @@ using RestoranMobile.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using Xamarin.Forms;
-using Xamarin.Forms.PlatformConfiguration.TizenSpecific;
 
 namespace RestoranMobile.ViewModels
 {
-  public  class NarudzbeViewModel:BaseViewModel
+    public  class NarudzbeViewModel:BaseViewModel
     {
         private readonly APIService service = new APIService("Narudzba");
         public ObservableCollection<Narudzba> Narudzbe { get; set; } = new ObservableCollection<Narudzba>();

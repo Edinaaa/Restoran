@@ -3,12 +3,9 @@ using Restoran.Model.Request;
 using RestoranMobile.Helper;
 using RestoranMobile.Models;
 using RestoranMobile.Views;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using Xamarin.Forms;
-using Xamarin.Forms.PlatformConfiguration.TizenSpecific;
 
 namespace RestoranMobile.ViewModels
 {
@@ -99,7 +96,7 @@ namespace RestoranMobile.ViewModels
         private async void SetStavke() {
             StavkeNarudzbeSearchRequest request = new StavkeNarudzbeSearchRequest() { NaruszbaId = Narudzba.NarudzbaId };
             var lista = await serviceStavke.Get<List<StavkaNarudzbe>>(request);
-    
+            Stavke.Clear();
             Ukupno = 0;
             foreach (var item in lista)
             {

@@ -1,13 +1,11 @@
 ﻿using Restoran.Model;
 using Restoran.Model.Request;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 
 namespace RestoranMobile.ViewModels
 {
-   public class NoviZahtjevViewModel: BaseViewModel
+    public class NoviZahtjevViewModel: BaseViewModel
     {
         private APIService service = new APIService("Zahtjev");
 

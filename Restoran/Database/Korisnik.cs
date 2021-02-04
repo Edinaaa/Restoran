@@ -32,7 +32,6 @@ namespace Restoran.Database
         public DateTime? DatumZaposljavanja { get; set; }
         public double IznosKredita { get; set; }
         [StringLength(30)]
-        [Index(IsUnique = true)]
         public string KorisnickoIme { get; set; }
         [Required(ErrorMessage = "Obavezno polje.")]
 
