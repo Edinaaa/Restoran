@@ -40,11 +40,8 @@ namespace Restoran.Services
         {
             Validiraj(update);
             var entity = _context.StavkeZahtjevas.Find(id);
-
-            _context.StavkeZahtjevas.Attach(entity);
+            entity.ZahtjevObradjen = update.ZahtjevObradjen;
             _context.StavkeZahtjevas.Update(entity);
-            _mapper.Map(update, entity);
-
             _context.SaveChanges();
             return _mapper.Map<Model.StavkeZahtjeva>(entity);
         }
