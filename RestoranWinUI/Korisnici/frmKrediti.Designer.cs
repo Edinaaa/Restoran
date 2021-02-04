@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.txtKorisnickoIme = new System.Windows.Forms.TextBox();
             this.txtIznosKredita = new System.Windows.Forms.TextBox();
@@ -36,6 +37,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.btnSnimi = new System.Windows.Forms.Button();
             this.btnPretrazi = new System.Windows.Forms.Button();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -54,6 +57,7 @@
             this.txtKorisnickoIme.Name = "txtKorisnickoIme";
             this.txtKorisnickoIme.Size = new System.Drawing.Size(100, 20);
             this.txtKorisnickoIme.TabIndex = 1;
+            this.txtKorisnickoIme.Validating += new System.ComponentModel.CancelEventHandler(this.txtKorisnickoIme_Validating);
             // 
             // txtIznosKredita
             // 
@@ -78,6 +82,7 @@
             this.txtIznosUplate.Name = "txtIznosUplate";
             this.txtIznosUplate.Size = new System.Drawing.Size(100, 20);
             this.txtIznosUplate.TabIndex = 5;
+            this.txtIznosUplate.Validating += new System.ComponentModel.CancelEventHandler(this.txtIznosUplate_Validating);
             // 
             // label3
             // 
@@ -108,6 +113,10 @@
             this.btnPretrazi.UseVisualStyleBackColor = true;
             this.btnPretrazi.Click += new System.EventHandler(this.btnPretrazi_Click);
             // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
+            // 
             // frmKrediti
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -123,6 +132,7 @@
             this.Controls.Add(this.label1);
             this.Name = "frmKrediti";
             this.Text = "frmKrediti";
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -138,5 +148,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnSnimi;
         private System.Windows.Forms.Button btnPretrazi;
+        private System.Windows.Forms.ErrorProvider errorProvider;
     }
 }

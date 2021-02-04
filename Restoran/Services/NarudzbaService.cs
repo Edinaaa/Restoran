@@ -45,22 +45,22 @@ namespace Restoran.Services
                 return _mapper.Map<List<Model.Narudzba>>(narudzbe);
             
         }
-        private void Validiraj(NarudzbaUpsertRequest request) {
+        private void Validiraj(NarudzbaUpsertRequest request, bool insert=true, int idKupca=0) {
 
-            if (request.BrojStola<1 || request.KorisnikId < 1) {
+            if (insert && (request.BrojStola<1 || request.KorisnikId < 1)) {
                 throw new UserException("Sva polja su obavezna.");
 
             }
             var uloge = _context.KorisnikUlogas.Include(x => x.Uloge).Where(x => x.Korisnik.KorisnickoIme == Helper.Helper.KorisnickoImeLogirani).ToList();
             bool kupac = false;
-            foreach (var item in uloge)//ako korisnik ima ulogu kupac ima pravo samo na svoje narudzbe
+            foreach (var item in uloge)//ako trenutno logirani korisnik ima ulogu kupac ima pravo samo na svoje narudzbe
             {
                 if (item.Uloge.Naziv == "Kupac")
                 {
                     kupac = true;
                 }
             }
-            if (request.KorisnikId!=uloge[0].KorisnikId && kupac)//ako je konobar moci ce mjenjati narudzbu
+            if (!insert && idKupca!=uloge[0].KorisnikId && kupac)//ako je konobar moci ce mjenjati narudzbu
             {                                                   //ali ne ako ima ulugu kupac
                 throw new UserException("Nemate pravo pristupa.");
 
@@ -122,7 +122,7 @@ namespace Restoran.Services
                 throw new UserException("Narudzba nije pronadjena.");
 
             }
-            Validiraj(update);
+            Validiraj(update, false, entity.KorisnikId);
             //narudzba se ne moze mjenjati ako je naplacena
             if (update.Naplati && (!entity.Naplaceno && !entity.Odbijena && entity.Odobrena))
             {

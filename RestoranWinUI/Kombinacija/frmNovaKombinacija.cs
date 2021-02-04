@@ -269,7 +269,7 @@ namespace RestoranWinUI.Kombinacija
         {
             if (Global.ValidatingObaveznoPoljeBool(ref txtCijena, e, errorProvider))
             {
-                Global.ValidatingDvaDecimalnaPolja(ref txtCijena, e, errorProvider);
+                Global.ValidatingBrojFloat(ref txtCijena, e, errorProvider);
 
             }
 
@@ -280,7 +280,7 @@ namespace RestoranWinUI.Kombinacija
         {
             if (Global.ValidatingObaveznoPoljeBool(ref txtPdv, e, errorProvider))
             {
-                Global.ValidatingDvaDecimalnaPolja(ref txtPdv, e, errorProvider);
+                Global.ValidatingBrojInt(ref txtPdv, e, errorProvider);
 
             }
         }

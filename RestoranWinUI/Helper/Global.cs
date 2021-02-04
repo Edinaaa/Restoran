@@ -65,6 +65,36 @@ namespace RestoranWinUI.Helper
 
             }
         }
+        public static void ValidatingBrojFloat(ref TextBox tb, CancelEventArgs e, ErrorProvider errorProvider)
+        {
+
+
+            if (!float.TryParse(tb.Text, out float br))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(tb,"Mozete unjeti samo broj npr 1.00");
+            }
+            else
+            {
+                errorProvider.SetError(tb, null);
+
+            }
+        }
+        public static void ValidatingBrojInt(ref TextBox tb, CancelEventArgs e, ErrorProvider errorProvider)
+        {
+
+
+            if (!int.TryParse(tb.Text, out int br))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(tb, "Mozete unjeti samo cijeli broj, npr 100.");
+            }
+            else
+            {
+                errorProvider.SetError(tb, null);
+
+            }
+        }
         public static void ValidatingUnique(ref TextBox tb,bool uslov, CancelEventArgs e, ErrorProvider errorProvider)
         {
 

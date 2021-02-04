@@ -191,14 +191,14 @@ namespace RestoranWinUI.Korisnici
         private async void txtKorisnickoIme_Validating(object sender, CancelEventArgs e)
         {
             Global.ValidatingObaveznoPolje(ref txtKorisnickoIme, e, errorProvider);
-            if (String.IsNullOrWhiteSpace( errorProvider.GetError(txtKorisnickoIme)))
+            if (!String.IsNullOrWhiteSpace(txtKorisnickoIme.Text))
             {
                 KorisniciSeachRequest request = new KorisniciSeachRequest() { 
                 KorisnickoIme=txtKorisnickoIme.Text
                 };
                 List<Korisnik> korisnici =await service.Get<List<Korisnik>>(request);
                 bool validno = false;
-                if (korisnici != null)
+                if (korisnici.Count()>0)
                 {
                     if (_id!=null && korisnici[0].KorisnikId != _id)
                     {//ako trenutno posmatranom pokusavamo postaviti korisnicko ime koje vec posjeduje neki drugi korisnik

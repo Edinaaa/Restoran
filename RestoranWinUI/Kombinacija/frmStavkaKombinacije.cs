@@ -59,10 +59,11 @@ namespace RestoranWinUI.Kombinacija
 
         private void txtKolicina_Validating(object sender, CancelEventArgs e)
         {
-            if (Global.ValidatingObaveznoPoljeBool(ref txtKolicina, e, errorProvider))
+            Global.ValidatingObaveznoPolje(ref txtKolicina, e, errorProvider);
+            if (String.IsNullOrWhiteSpace(errorProvider.GetError(txtKolicina)))
             {
-                Global.ValidatingDvaDecimalnaPolja(ref txtKolicina,e,errorProvider);
-            } 
+                Global.ValidatingBrojFloat(ref txtKolicina, e, errorProvider);
+            }
         }
     }
 }

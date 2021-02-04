@@ -27,10 +27,7 @@ namespace RestoranWinUI.Narudzbe
             InitializeComponent();
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private async Task SetStavke() {
             StavkeNarudzbeSearchRequest request = new StavkeNarudzbeSearchRequest() { NaruszbaId = _id };
@@ -143,7 +140,7 @@ namespace RestoranWinUI.Narudzbe
      
                 NarudzbaUpsertRequest r = new NarudzbaUpsertRequest() { 
                     Naplaceno = true 
-                  };
+                };
                    var n=  await service.Update<Restoran.Model.Narudzba>(narudzba.NarudzbaId, r);
                 cbNaplaceno.Checked = n.Naplaceno;
             }
@@ -162,7 +159,7 @@ namespace RestoranWinUI.Narudzbe
                 Odbijena = true,
                 Odobrena = false
             };
-            var n = await service.Update<Restoran.Model.Narudzba>(narudzba.NarudzbaId, r);
+            var n = await service.Update<Restoran.Model.Narudzba>(_id, r);
             if (n != null && n.Odbijena)
             {
                 cbOdbij.Checked = n.Odbijena;

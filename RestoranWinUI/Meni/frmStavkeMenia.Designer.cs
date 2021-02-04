@@ -29,6 +29,7 @@ namespace RestoranWinUI.Meni
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pbSlika = new System.Windows.Forms.PictureBox();
             this.btnSnimi = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
@@ -42,7 +43,9 @@ namespace RestoranWinUI.Meni
             this.label4 = new System.Windows.Forms.Label();
             this.txtPdv = new System.Windows.Forms.TextBox();
             this.cbAktivan = new System.Windows.Forms.CheckBox();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pbSlika)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // pbSlika
@@ -78,6 +81,7 @@ namespace RestoranWinUI.Meni
             this.txtPopust.Name = "txtPopust";
             this.txtPopust.Size = new System.Drawing.Size(100, 20);
             this.txtPopust.TabIndex = 34;
+            this.txtPopust.Validating += new System.ComponentModel.CancelEventHandler(this.txtPopust_Validating);
             // 
             // label5
             // 
@@ -111,6 +115,7 @@ namespace RestoranWinUI.Meni
             this.txtCijena.Name = "txtCijena";
             this.txtCijena.Size = new System.Drawing.Size(100, 20);
             this.txtCijena.TabIndex = 26;
+            this.txtCijena.Validating += new System.ComponentModel.CancelEventHandler(this.txtCijena_Validating);
             // 
             // label1
             // 
@@ -128,6 +133,7 @@ namespace RestoranWinUI.Meni
             this.txtNaziv.Name = "txtNaziv";
             this.txtNaziv.Size = new System.Drawing.Size(100, 20);
             this.txtNaziv.TabIndex = 24;
+            this.txtNaziv.Validating += new System.ComponentModel.CancelEventHandler(this.txtNaziv_Validating);
             // 
             // label4
             // 
@@ -144,6 +150,7 @@ namespace RestoranWinUI.Meni
             this.txtPdv.Name = "txtPdv";
             this.txtPdv.Size = new System.Drawing.Size(100, 20);
             this.txtPdv.TabIndex = 46;
+            this.txtPdv.Validating += new System.ComponentModel.CancelEventHandler(this.txtPdv_Validating);
             // 
             // cbAktivan
             // 
@@ -154,6 +161,10 @@ namespace RestoranWinUI.Meni
             this.cbAktivan.TabIndex = 48;
             this.cbAktivan.Text = "Aktivan";
             this.cbAktivan.UseVisualStyleBackColor = true;
+            // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
             // 
             // frmStavkeMenia
             // 
@@ -177,6 +188,7 @@ namespace RestoranWinUI.Meni
             this.Text = "frmStavkeMenia";
             this.Load += new System.EventHandler(this.frmStavkeMenia_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbSlika)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -196,5 +208,6 @@ namespace RestoranWinUI.Meni
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtPdv;
         private System.Windows.Forms.CheckBox cbAktivan;
+        private System.Windows.Forms.ErrorProvider errorProvider;
     }
 }

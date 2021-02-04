@@ -122,6 +122,10 @@ namespace RestoranWinUI.Artikli
         private void txtCijena_Validating(object sender, CancelEventArgs e)
         {
             Global.ValidatingObaveznoPolje(ref txtCijena, e, errorProvider);
+            if (String.IsNullOrWhiteSpace(errorProvider.GetError(txtCijena)))
+            {
+                Global.ValidatingBrojFloat(ref txtCijena, e, errorProvider);
+            }
 
         }
 
@@ -130,7 +134,10 @@ namespace RestoranWinUI.Artikli
         private void txtPDV_Validating(object sender, CancelEventArgs e)
         {
             Global.ValidatingObaveznoPolje(ref txtPDV, e, errorProvider);
-
+            if (String.IsNullOrWhiteSpace(errorProvider.GetError(txtPDV)))
+            {
+                Global.ValidatingBrojInt(ref txtPDV, e, errorProvider);
+            }
         }
 
         private void txtSastav_Validating(object sender, CancelEventArgs e)
@@ -142,13 +149,20 @@ namespace RestoranWinUI.Artikli
         private void txtPopust_Validating(object sender, CancelEventArgs e)
         {
             Global.ValidatingObaveznoPolje(ref txtPopust, e, errorProvider);
-
+            if (String.IsNullOrWhiteSpace(errorProvider.GetError(txtPopust)))
+            {
+                Global.ValidatingBrojInt(ref txtPopust, e, errorProvider);
+            }
         }
 
         private void txtKolicina_Validating(object sender, CancelEventArgs e)
         {
             Global.ValidatingObaveznoPolje(ref txtKolicina, e, errorProvider);
 
+            if (String.IsNullOrWhiteSpace(errorProvider.GetError(txtKolicina)))
+            {
+                Global.ValidatingBrojInt(ref txtKolicina, e, errorProvider);
+            }
         }
 
         private void txtSlika_Validating(object sender, CancelEventArgs e)

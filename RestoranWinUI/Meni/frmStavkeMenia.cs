@@ -47,6 +47,36 @@ namespace RestoranWinUI.Meni
             pbSlika.Image = Global.ByteToImage(Stavka.Slika);
         }
 
-  
+        private void txtNaziv_Validating(object sender, CancelEventArgs e)
+        {
+            Global.ValidatingObaveznoPolje(ref txtNaziv, e, errorProvider);
+        }
+
+        private void txtPdv_Validating(object sender, CancelEventArgs e)
+        {
+            Global.ValidatingObaveznoPolje(ref txtPdv, e, errorProvider);
+            if (String.IsNullOrWhiteSpace(errorProvider.GetError(txtPdv)))
+            {
+                Global.ValidatingBrojInt(ref txtPdv, e, errorProvider);
+            }
+        }
+
+        private void txtCijena_Validating(object sender, CancelEventArgs e)
+        {
+            Global.ValidatingObaveznoPolje(ref txtCijena, e, errorProvider);
+            if (String.IsNullOrWhiteSpace(errorProvider.GetError(txtCijena)))
+            {
+                Global.ValidatingBrojFloat(ref txtCijena, e, errorProvider);
+            }
+        }
+
+        private void txtPopust_Validating(object sender, CancelEventArgs e)
+        {
+            Global.ValidatingObaveznoPolje(ref txtPopust, e, errorProvider);
+            if (String.IsNullOrWhiteSpace(errorProvider.GetError(txtPopust)))
+            {
+                Global.ValidatingBrojInt(ref txtPopust, e, errorProvider);
+            }
+        }
     }
 }

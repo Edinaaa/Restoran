@@ -8,7 +8,7 @@ namespace Restoran.Model.Request
    public class NarudzbaUpsertRequest
     {
       
-        [Range(0, int.MaxValue, ErrorMessage = "Mozete unjeti cijeli broj.")]
+        
 
         public int KorisnikId { get; set; }
         public bool PlacanjeKreditima { get; set; }
@@ -17,7 +17,7 @@ namespace Restoran.Model.Request
         public bool Odbijena { get; set; }
 
         public bool Naplati { get; set; }
-        [Range(1, int.MaxValue, ErrorMessage = "Mozete unjeti cijeli broj.")]
+      
 
         public int BrojStola { get; set; }
 
